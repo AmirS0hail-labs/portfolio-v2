@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -7,6 +8,7 @@ import { hero } from "@/content/hero";
 import type { AccentColor } from "@/content/types";
 import { Button } from "@/components/ui/button";
 import { FloatingPill } from "@/components/floating-pill";
+import { StatusDot } from "@/components/status-dot";
 import { cn } from "@/lib/utils";
 
 const accentText: Record<AccentColor, string> = {
@@ -25,6 +27,49 @@ function pill(label: string) {
   return found;
 }
 
+const lane = {
+  high: "sm:top-0 sm:-translate-y-[40%]",
+  mid: "sm:top-[0.2em]",
+  low: "sm:top-auto sm:bottom-0 sm:translate-y-[28%]",
+} as const;
+
+function LinePills({
+  left,
+  right,
+  leftLane = "mid",
+  rightLane = "mid",
+}: {
+  left?: ReactNode;
+  right?: ReactNode;
+  leftLane?: keyof typeof lane;
+  rightLane?: keyof typeof lane;
+}) {
+  return (
+    <span className="mt-3 flex flex-wrap justify-center gap-2 sm:contents">
+      {left ? (
+        <span
+          className={cn(
+            "sm:absolute sm:right-full sm:mt-0 sm:mr-4 sm:block",
+            lane[leftLane],
+          )}
+        >
+          {left}
+        </span>
+      ) : null}
+      {right ? (
+        <span
+          className={cn(
+            "sm:absolute sm:left-full sm:mt-0 sm:ml-5 sm:block",
+            lane[rightLane],
+          )}
+        >
+          {right}
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
@@ -41,6 +86,8 @@ export function Hero() {
         };
 
   const backend = pill("Backend");
+  const endToEnd = pill("End-to-end");
+  const insurtech = pill("Insurtech");
   const productMinded = pill("Product-minded");
   const islamabad = pill("Based in Islamabad");
 
@@ -65,15 +112,28 @@ export function Hero() {
               )}
             >
               {hero.headline[0].text}
-              <span className="mt-3 flex justify-center sm:absolute sm:top-[0.28em] sm:right-full sm:mt-0 sm:mr-4 sm:block">
-                <FloatingPill
-                  label={backend.label}
-                  accent={backend.accent}
-                  entranceDelay={0.42}
-                  floatDelay={0.15}
-                  floatDuration={3.8}
-                />
-              </span>
+              <LinePills
+                leftLane="mid"
+                rightLane="high"
+                left={
+                  <FloatingPill
+                    label={backend.label}
+                    accent={backend.accent}
+                    entranceDelay={0.42}
+                    floatDelay={0.15}
+                    floatDuration={3.8}
+                  />
+                }
+                right={
+                  <FloatingPill
+                    label={endToEnd.label}
+                    accent={endToEnd.accent}
+                    entranceDelay={0.5}
+                    floatDelay={0.45}
+                    floatDuration={4.6}
+                  />
+                }
+              />
             </MotionSpan>
           </span>
 
@@ -86,12 +146,14 @@ export function Hero() {
               )}
             >
               {hero.headline[1].text}
-              <span
-                aria-hidden="true"
-                className="mt-2 block font-mono text-xs tracking-wide text-accent-sage sm:absolute sm:top-[0.32em] sm:left-full sm:mt-0 sm:ml-6 sm:text-sm sm:whitespace-nowrap"
-              >
-                {"// "}
-                {islamabad.label}
+              <span className="mt-2 flex justify-center sm:absolute sm:top-auto sm:bottom-0 sm:left-full sm:mt-0 sm:ml-5 sm:block sm:translate-y-[32%]">
+                <span
+                  aria-hidden="true"
+                  className="block font-mono text-xs tracking-wide whitespace-nowrap text-accent-sage sm:text-sm"
+                >
+                  {"// "}
+                  {islamabad.label}
+                </span>
               </span>
             </MotionSpan>
           </span>
@@ -105,15 +167,28 @@ export function Hero() {
               )}
             >
               {hero.headline[2].text}
-              <span className="mt-3 flex justify-center sm:absolute sm:top-[0.28em] sm:left-full sm:mt-0 sm:ml-4 sm:block">
-                <FloatingPill
-                  label={productMinded.label}
-                  accent={productMinded.accent}
-                  entranceDelay={0.58}
-                  floatDelay={0.7}
-                  floatDuration={4.4}
-                />
-              </span>
+              <LinePills
+                leftLane="mid"
+                rightLane="low"
+                left={
+                  <FloatingPill
+                    label={insurtech.label}
+                    accent={insurtech.accent}
+                    entranceDelay={0.54}
+                    floatDelay={0.95}
+                    floatDuration={4.1}
+                  />
+                }
+                right={
+                  <FloatingPill
+                    label={productMinded.label}
+                    accent={productMinded.accent}
+                    entranceDelay={0.58}
+                    floatDelay={0.7}
+                    floatDuration={4.4}
+                  />
+                }
+              />
             </MotionSpan>
           </span>
         </h1>
@@ -141,8 +216,11 @@ export function Hero() {
               })}
           className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
-          <Button asChild size="lg">
-            <Link href={hero.cta.href}>{hero.cta.label}</Link>
+          <Button asChild size="lg" className="group">
+            <Link href={hero.cta.href}>
+              <StatusDot />
+              {hero.cta.label}
+            </Link>
           </Button>
           {hero.secondaryCta ? (
             <Button asChild size="lg" variant="outline">

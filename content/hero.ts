@@ -10,7 +10,8 @@ export const hero: HeroContent = {
     "Backend-leaning full-stack engineer with 4 years building SaaS, insurtech, and internal workflow products with Ruby on Rails, React, Next.js, and PostgreSQL. I take ambiguous problems from requirements to reliable, shipped software.",
   pills: [
     { label: "Backend", accent: "sage" },
-    { label: "Full-Stack", accent: "sage" },
+    { label: "End-to-end", accent: "sage" },
+    { label: "Insurtech", accent: "sage" },
     { label: "Product-minded", accent: "sage" },
     { label: "Based in Islamabad", accent: "sage" },
   ],

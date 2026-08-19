@@ -180,6 +180,15 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .status-dot::after {
+    content: none;
+    animation: none !important;
+  }
+
+  .tech-marquee-track {
+    animation: none !important;
+  }
 }
 
 @layer utilities {
@@ -279,5 +288,77 @@
       inset 0 1px 0 color-mix(in oklab, var(--foreground) 32%, transparent),
       inset 0 -1px 0
         color-mix(in oklab, var(--accent-mahogany) 22%, transparent);
+  }
+
+  /* Live indicator: pulse on the sage dot only, not a button halo. */
+  .status-dot {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background-color: var(--accent-sage);
+    box-shadow: 0 0 0 1.5px
+      color-mix(in oklab, var(--primary-foreground) 55%, transparent);
+  }
+
+  .status-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--accent-sage);
+    opacity: 0.55;
+    animation: status-pulse 2s ease-out infinite;
+  }
+
+  .group:hover .status-dot::after,
+  .group:focus-visible .status-dot::after {
+    animation-duration: 1.1s;
+  }
+
+  .tech-marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+
+  .tech-marquee-track {
+    animation: tech-marquee 42s linear infinite;
+  }
+
+  .tech-marquee:hover .tech-marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(2.85);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.85);
+    opacity: 0;
+  }
+}
+
+@keyframes tech-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }

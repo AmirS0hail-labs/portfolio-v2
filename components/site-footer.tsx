@@ -22,7 +22,7 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-border/80 bg-background">
-      <div className="flex w-full flex-col gap-8 px-3 py-8 sm:px-4 lg:px-5">
+      <div className="flex w-full flex-col gap-8 px-3 pt-8 pb-6 sm:px-4 lg:px-5">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
           <p className="font-mono text-sm text-accent-sage">
             <span aria-hidden="true">{"// "}</span>
@@ -62,6 +62,15 @@ export function SiteFooter() {
           </p>
           <p>{site.location}</p>
         </div>
+      </div>
+
+      <div
+        aria-hidden="true"
+        className="h-[0.68em] overflow-hidden px-1 text-[clamp(3rem,13vw,11rem)] leading-none select-none"
+      >
+        <p className="font-display text-center leading-none font-semibold tracking-[-0.07em] whitespace-nowrap text-foreground">
+          AMIR SOHAIL
+        </p>
       </div>
     </footer>
   );

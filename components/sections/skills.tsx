@@ -2,6 +2,7 @@ import { skillGroups } from "@/content/skills";
 import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
 import { TechBadge } from "@/components/tech-badge";
+import { TechMarquee } from "@/components/tech-marquee";
 import { Reveal } from "@/components/reveal";
 
 export function Skills() {
@@ -14,6 +15,10 @@ export function Skills() {
           description="Grouped by where they sit in the stack. Backend-leaning, but comfortable end to end."
         />
       </Reveal>
+
+      <div className="mt-10">
+        <TechMarquee />
+      </div>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((group, index) => (
