@@ -3,7 +3,15 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import {
+  BookOpen,
+  Home,
+  Layers,
+  Mail,
+  Menu,
+  User,
+  type LucideIcon,
+} from "lucide-react";
 
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
@@ -19,19 +27,22 @@ import { cn } from "@/lib/utils";
 
 const sectionIds = ["home", "case-studies", "projects", "about", "contact"];
 
+const navIcons: Record<string, LucideIcon> = {
+  Home,
+  "Case Studies": BookOpen,
+  Projects: Layers,
+  About: User,
+  Contact: Mail,
+};
+
+const chromePill =
+  "rounded-full border border-border bg-background/80 backdrop-blur-xl";
+
 export function SiteNav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const [scrolled, setScrolled] = React.useState(false);
   const [active, setActive] = React.useState("home");
   const [open, setOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   React.useEffect(() => {
     if (!isHome) return;
@@ -53,19 +64,17 @@ export function SiteNav() {
   const hashOf = (href: string) => href.split("#")[1] ?? "";
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 lg:px-5">
       <nav
         aria-label="Primary"
-        className={cn(
-          "flex w-full max-w-5xl items-center justify-between gap-3 rounded-full border px-3 py-2 transition-all duration-300",
-          scrolled
-            ? "border-border bg-background/80 shadow-lg shadow-black/30 backdrop-blur-xl"
-            : "border-transparent bg-transparent",
-        )}
+        className="relative flex items-center justify-between"
       >
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-semibold tracking-tight"
+          className={cn(
+            chromePill,
+            "inline-flex items-center gap-2 px-2.5 py-1.5 text-sm font-semibold tracking-tight",
+          )}
         >
           <span className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-accent-blue to-accent-violet text-xs font-bold text-background">
             AS
@@ -73,21 +82,30 @@ export function SiteNav() {
           <span className="hidden sm:inline">{site.name}</span>
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul
+          className={cn(
+            chromePill,
+            "absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-0.5 p-1 lg:flex",
+          )}
+        >
           {site.nav.map((item) => {
             const isActive = isHome && active === hashOf(item.href);
+            const Icon = navIcons[item.label];
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   className={cn(
-                    "rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                    "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-white/10 text-foreground"
-                      : "text-muted-foreground hover:bg-white/5 hover:text-foreground",
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
+                  {Icon ? (
+                    <Icon className="size-3.5 shrink-0" aria-hidden="true" />
+                  ) : null}
                   {item.label}
                 </Link>
               </li>
@@ -96,8 +114,19 @@ export function SiteNav() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="hidden md:inline-flex">
-            <Link href="/#contact">Contact Me</Link>
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className={cn(
+              chromePill,
+              "hidden h-10 px-4 hover:bg-white/5 lg:inline-flex",
+            )}
+          >
+            <Link href="/#contact">
+              <Mail className="size-4" aria-hidden="true" />
+              Contact Me
+            </Link>
           </Button>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -105,7 +134,7 @@ export function SiteNav() {
               <Button
                 variant="outline"
                 size="icon"
-                className="size-9 md:hidden"
+                className={cn(chromePill, "size-10 lg:hidden")}
                 aria-label="Open menu"
               >
                 <Menu className="size-5" />
@@ -116,23 +145,35 @@ export function SiteNav() {
                 <SheetTitle>Navigation</SheetTitle>
               </SheetHeader>
               <ul className="flex flex-col gap-1 px-4">
-                {site.nav.map((item) => (
-                  <li key={item.href}>
-                    <SheetClose asChild>
-                      <Link
-                        href={item.href}
-                        className="block rounded-lg px-3 py-2.5 text-base font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
-                      >
-                        {item.label}
-                      </Link>
-                    </SheetClose>
-                  </li>
-                ))}
+                {site.nav.map((item) => {
+                  const Icon = navIcons[item.label];
+                  return (
+                    <li key={item.href}>
+                      <SheetClose asChild>
+                        <Link
+                          href={item.href}
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-base font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+                        >
+                          {Icon ? (
+                            <Icon
+                              className="size-4 shrink-0"
+                              aria-hidden="true"
+                            />
+                          ) : null}
+                          {item.label}
+                        </Link>
+                      </SheetClose>
+                    </li>
+                  );
+                })}
               </ul>
               <div className="mt-auto p-6">
                 <SheetClose asChild>
                   <Button asChild className="w-full">
-                    <Link href="/#contact">Contact Me</Link>
+                    <Link href="/#contact">
+                      <Mail className="size-4" aria-hidden="true" />
+                      Contact Me
+                    </Link>
                   </Button>
                 </SheetClose>
               </div>

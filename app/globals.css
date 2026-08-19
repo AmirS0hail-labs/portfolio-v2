@@ -2,14 +2,14 @@
 @import "tw-animate-css";
 
 /*
- * Dark-only theme. Near-black base with electric blue + violet accents.
+ * Dark-only theme. Canvas black with electric blue + violet accents.
  * Tokens follow the shadcn/ui naming convention so vendored UI primitives
  * work out of the box, with extra accent tokens layered on top.
  */
 :root {
   color-scheme: dark;
 
-  --background: #08080b;
+  --background: #050506;
   --foreground: #ededed;
 
   --card: #0d0d13;
@@ -19,7 +19,7 @@
   --popover-foreground: #ededed;
 
   --primary: #60a5fa;
-  --primary-foreground: #08080b;
+  --primary-foreground: #050506;
 
   --secondary: #16161d;
   --secondary-foreground: #ededed;
@@ -96,7 +96,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -157,13 +157,11 @@
     color: transparent;
   }
 
-  /* Subtle dotted grid used behind the hero. */
+  /* Quiet canvas grid — hairline, not a dotted SaaS texture. */
   .bg-grid {
-    background-image: radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    );
-    background-size: 28px 28px;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
   }
 }

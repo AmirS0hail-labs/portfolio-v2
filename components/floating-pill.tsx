@@ -12,8 +12,8 @@ const accentDot: Record<AccentColor, string> = {
 };
 
 const accentRing: Record<AccentColor, string> = {
-  blue: "border-accent-blue/25",
-  violet: "border-accent-violet/25",
+  blue: "border-accent-blue/30",
+  violet: "border-accent-violet/30",
   default: "border-border",
 };
 
@@ -21,48 +21,85 @@ type FloatingPillProps = {
   label: string;
   accent?: AccentColor;
   className?: string;
-  /** Idle-float animation delay (seconds). */
-  floatDelay?: number;
+  /** Optional chrome prefix (e.g. "//") — not part of locked copy. */
+  prefix?: string;
   /** Reveal entrance delay (seconds). */
   entranceDelay?: number;
+  /** Idle float delay (seconds). */
+  floatDelay?: number;
+  /** Idle float loop duration (seconds). */
+  floatDuration?: number;
+  /** When false, fade in only — no idle drift. */
+  float?: boolean;
 };
 
 export function FloatingPill({
   label,
   accent = "default",
   className,
-  floatDelay = 0,
+  prefix,
   entranceDelay = 0,
+  floatDelay = 0,
+  floatDuration = 4,
+  float = true,
 }: FloatingPillProps) {
   const shouldReduceMotion = useReducedMotion();
+  const canFloat = float && !shouldReduceMotion;
 
   return (
     <motion.span
-      initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.85 }}
+      aria-hidden="true"
+      initial={shouldReduceMotion ? false : { opacity: 0 }}
       animate={
-        shouldReduceMotion ? undefined : { opacity: 1, scale: 1, y: [0, -8, 0] }
+        shouldReduceMotion
+          ? undefined
+          : canFloat
+            ? { opacity: 1, y: [0, -12, -4, -14, 0], x: [0, 5, 0, -4, 0] }
+            : { opacity: 1 }
       }
       transition={
         shouldReduceMotion
           ? undefined
-          : {
-              opacity: { duration: 0.5, delay: entranceDelay },
-              scale: { duration: 0.5, delay: entranceDelay },
-              y: {
-                duration: 5,
-                delay: floatDelay,
-                repeat: Infinity,
-                ease: "easeInOut",
-              },
-            }
+          : canFloat
+            ? {
+                opacity: {
+                  duration: 0.45,
+                  delay: entranceDelay,
+                  ease: [0.22, 1, 0.36, 1],
+                },
+                y: {
+                  duration: floatDuration,
+                  delay: floatDelay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+                x: {
+                  duration: floatDuration * 1.15,
+                  delay: floatDelay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
+              }
+            : {
+                opacity: {
+                  duration: 0.45,
+                  delay: entranceDelay,
+                  ease: [0.22, 1, 0.36, 1],
+                },
+              }
       }
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border bg-card/70 px-3.5 py-1.5 text-sm font-medium text-foreground/90 shadow-lg shadow-black/30 backdrop-blur-md select-none",
+        "pointer-events-none inline-flex shrink-0 items-center gap-1.5 rounded-full border bg-background/90 px-2.5 py-1 font-mono text-[10px] tracking-wide text-foreground/90 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md select-none sm:text-[11px]",
         accentRing[accent],
         className,
       )}
     >
       <span className={cn("size-1.5 rounded-full", accentDot[accent])} />
+      {prefix ? (
+        <span className="text-muted-foreground" aria-hidden="true">
+          {prefix}
+        </span>
+      ) : null}
       {label}
     </motion.span>
   );

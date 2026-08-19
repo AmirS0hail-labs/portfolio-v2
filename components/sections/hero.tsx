@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { hero } from "@/content/hero";
-import { site } from "@/content/site";
 import type { AccentColor } from "@/content/types";
 import { Button } from "@/components/ui/button";
 import { FloatingPill } from "@/components/floating-pill";
@@ -16,124 +15,131 @@ const accentText: Record<AccentColor, string> = {
   default: "text-foreground",
 };
 
-const container: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
-  },
-};
+const ease = [0.22, 1, 0.36, 1] as const;
 
-const item: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-// Absolute positions for the floating pills on large screens.
-const pillPositions = [
-  "left-[4%] top-[26%] -rotate-3 xl:left-[10%]",
-  "right-[5%] top-[30%] rotate-3 xl:right-[11%]",
-  "left-[8%] bottom-[24%] rotate-2 xl:left-[14%]",
-  "right-[6%] bottom-[22%] -rotate-2 xl:right-[13%]",
-];
+function pill(label: string) {
+  const found = hero.pills.find((entry) => entry.label === label);
+  if (!found) {
+    throw new Error(`Missing hero pill: ${label}`);
+  }
+  return found;
+}
 
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const MotionDiv = shouldReduceMotion ? "div" : motion.div;
-  const MotionH1 = shouldReduceMotion ? "h1" : motion.h1;
+  const MotionSpan = shouldReduceMotion ? "span" : motion.span;
+  const MotionP = shouldReduceMotion ? "p" : motion.p;
 
-  const motionProps = shouldReduceMotion
-    ? {}
-    : {
-        variants: container,
-        initial: "hidden" as const,
-        animate: "show" as const,
-      };
+  const lineProps = (index: number) =>
+    shouldReduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.05 + index * 0.08, ease },
+        };
 
-  const itemProps = shouldReduceMotion ? {} : { variants: item };
+  const backend = pill("Backend");
+  const productMinded = pill("Product-minded");
+  const islamabad = pill("Based in Islamabad");
 
   return (
     <section
       id="home"
       aria-label="Introduction"
-      className="relative flex min-h-svh items-center overflow-hidden pt-28 pb-16"
+      className="relative flex min-h-svh items-center justify-center overflow-x-clip px-3 pt-24 pb-16 sm:overflow-visible sm:px-4 lg:px-5"
     >
-      {/* Background: dotted grid + accent glows */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)] opacity-60" />
-        <div className="absolute -top-1/4 -left-1/4 size-[36rem] rounded-full bg-accent-blue/15 blur-[120px]" />
-        <div className="absolute -right-1/4 -bottom-1/4 size-[36rem] rounded-full bg-accent-violet/15 blur-[120px]" />
+        <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_78%)] opacity-40" />
       </div>
 
-      {/* Floating pills — absolute on large screens */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden lg:block"
-      >
-        {hero.pills.map((pill, i) => (
-          <FloatingPill
-            key={pill.label}
-            label={pill.label}
-            accent={pill.accent}
-            floatDelay={i * 0.6}
-            entranceDelay={0.5 + i * 0.12}
-            className={cn("absolute", pillPositions[i])}
-          />
-        ))}
-      </div>
-
-      <MotionDiv
-        {...motionProps}
-        className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center gap-8 px-6 text-center"
-      >
-        <motion.span
-          {...itemProps}
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-sm text-muted-foreground backdrop-blur-md"
-        >
-          <span className="size-2 rounded-full bg-gradient-to-br from-accent-blue to-accent-violet" />
-          {site.name} — {site.location}
-        </motion.span>
-
-        <MotionH1
-          {...itemProps}
-          className="font-display text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
-        >
-          {hero.headline.map((line) => (
-            <motion.span
-              key={line.text}
-              {...(shouldReduceMotion ? {} : { variants: item })}
-              className={cn("block", accentText[line.accent])}
+      <div className="relative z-10 flex w-full max-w-[90rem] flex-col items-center text-center">
+        <h1 className="font-display text-[clamp(2.7rem,11vw,9.25rem)] leading-[0.9] font-semibold tracking-[-0.04em] sm:leading-[0.88]">
+          <span className="block">
+            <MotionSpan
+              {...lineProps(0)}
+              className={cn(
+                "relative inline-block whitespace-nowrap",
+                accentText[hero.headline[0].accent],
+              )}
             >
-              {line.text}
-            </motion.span>
-          ))}
-        </MotionH1>
+              {hero.headline[0].text}
+              <span className="mt-3 flex justify-center sm:absolute sm:top-[0.28em] sm:right-full sm:mt-0 sm:mr-4 sm:block">
+                <FloatingPill
+                  label={backend.label}
+                  accent={backend.accent}
+                  entranceDelay={0.42}
+                  floatDelay={0.15}
+                  floatDuration={3.8}
+                />
+              </span>
+            </MotionSpan>
+          </span>
 
-        <motion.p
-          {...itemProps}
-          className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+          <span className="mt-[0.04em] block">
+            <MotionSpan
+              {...lineProps(1)}
+              className={cn(
+                "relative inline-block whitespace-nowrap",
+                accentText[hero.headline[1].accent],
+              )}
+            >
+              {hero.headline[1].text}
+              <span
+                aria-hidden="true"
+                className="mt-2 block font-mono text-xs tracking-wide text-muted-foreground sm:absolute sm:top-[0.32em] sm:left-full sm:mt-0 sm:ml-6 sm:text-sm sm:whitespace-nowrap"
+              >
+                {"// "}
+                {islamabad.label}
+              </span>
+            </MotionSpan>
+          </span>
+
+          <span className="mt-[0.04em] block">
+            <MotionSpan
+              {...lineProps(2)}
+              className={cn(
+                "relative inline-block whitespace-nowrap",
+                accentText[hero.headline[2].accent],
+              )}
+            >
+              {hero.headline[2].text}
+              <span className="mt-3 flex justify-center sm:absolute sm:top-[0.28em] sm:left-full sm:mt-0 sm:ml-4 sm:block">
+                <FloatingPill
+                  label={productMinded.label}
+                  accent={productMinded.accent}
+                  entranceDelay={0.58}
+                  floatDelay={0.7}
+                  floatDuration={4.4}
+                />
+              </span>
+            </MotionSpan>
+          </span>
+        </h1>
+
+        <MotionP
+          {...(shouldReduceMotion
+            ? {}
+            : {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.6, delay: 0.72, ease },
+              })}
+          className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-10 sm:text-lg"
         >
           {hero.subheadline}
-        </motion.p>
+        </MotionP>
 
-        {/* Floating pills — inline row on small/medium screens */}
-        <motion.ul
-          {...itemProps}
-          className="flex flex-wrap items-center justify-center gap-2.5 lg:hidden"
-        >
-          {hero.pills.map((pill) => (
-            <li key={pill.label}>
-              <FloatingPill label={pill.label} accent={pill.accent} />
-            </li>
-          ))}
-        </motion.ul>
-
-        <motion.div
-          {...itemProps}
-          className="flex flex-col items-center gap-3 sm:flex-row"
+        <MotionDiv
+          {...(shouldReduceMotion
+            ? {}
+            : {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.6, delay: 0.82, ease },
+              })}
+          className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
           <Button asChild size="lg">
             <Link href={hero.cta.href}>{hero.cta.label}</Link>
@@ -145,8 +151,8 @@ export function Hero() {
               </Link>
             </Button>
           ) : null}
-        </motion.div>
-      </MotionDiv>
+        </MotionDiv>
+      </div>
     </section>
   );
 }
