@@ -15,6 +15,7 @@ import {
 
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/analytics";
 import {
   Sheet,
   SheetClose,
@@ -122,7 +123,10 @@ export function SiteNav() {
               "hidden h-10 px-4 hover:bg-accent-mahogany/55 lg:inline-flex",
             )}
           >
-            <Link href="/#contact">
+            <Link
+              href="/#contact"
+              onClick={() => trackEvent("cta_contact", { placement: "nav" })}
+            >
               <Mail className="size-4" aria-hidden="true" />
               Contact Me
             </Link>
@@ -169,7 +173,12 @@ export function SiteNav() {
               <div className="mt-auto p-6">
                 <SheetClose asChild>
                   <Button asChild className="w-full">
-                    <Link href="/#contact">
+                    <Link
+                      href="/#contact"
+                      onClick={() =>
+                        trackEvent("cta_contact", { placement: "nav_mobile" })
+                      }
+                    >
                       <Mail className="size-4" aria-hidden="true" />
                       Contact Me
                     </Link>

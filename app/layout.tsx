@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 
 import { site, siteUrl } from "@/content/site";
+import { AnalyticsScript } from "@/components/analytics-script";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
@@ -104,6 +105,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <AnalyticsScript />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

@@ -9,6 +9,7 @@ import type { AccentColor } from "@/content/types";
 import { Button } from "@/components/ui/button";
 import { FloatingPill } from "@/components/floating-pill";
 import { StatusDot } from "@/components/status-dot";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 const accentText: Record<AccentColor, string> = {
@@ -217,7 +218,10 @@ export function Hero() {
           className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
           <Button asChild size="lg" className="group">
-            <Link href={hero.cta.href}>
+            <Link
+              href={hero.cta.href}
+              onClick={() => trackEvent("cta_contact", { placement: "hero" })}
+            >
               <StatusDot />
               {hero.cta.label}
             </Link>

@@ -1,19 +1,26 @@
-import Link from "next/link";
-
 import { site } from "@/content/site";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
+import { TrackedExternalLink } from "@/components/tracked-external-link";
+import type { AnalyticsEventName } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-const socials = [
+const socials: {
+  label: string;
+  href: string;
+  Icon: typeof LinkedInIcon | typeof GitHubIcon;
+  event: AnalyticsEventName;
+}[] = [
   {
     label: "LinkedIn",
     href: site.linkedin,
     Icon: LinkedInIcon,
+    event: "outbound_linkedin",
   },
   {
     label: "GitHub",
     href: site.github,
     Icon: GitHubIcon,
+    event: "outbound_github",
   },
 ];
 
@@ -30,30 +37,34 @@ export function SiteFooter() {
           </p>
 
           <ul className="flex items-center gap-2">
-            {socials.map(({ label, href, Icon }) => (
+            {socials.map(({ label, href, Icon, event }) => (
               <li key={label}>
-                <Link
+                <TrackedExternalLink
+                  event={event}
+                  placement="footer"
                   href={href}
                   aria-label={label}
                   title={label}
                   target="_blank"
                   rel="noopener noreferrer"
-                    className={cn(
-                      "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
-                    )}
+                  className={cn(
+                    "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
+                  )}
                 >
                   <Icon className="size-[18px]" />
-                </Link>
+                </TrackedExternalLink>
               </li>
             ))}
           </ul>
 
-          <a
+          <TrackedExternalLink
+            event="outbound_email"
+            placement="footer"
             href={`mailto:${site.email}`}
             className="inline-flex items-center rounded-full border border-border bg-transparent px-4 py-2 font-mono text-sm text-foreground transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px"
           >
             {site.email}
-          </a>
+          </TrackedExternalLink>
         </div>
 
         <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
@@ -68,7 +79,7 @@ export function SiteFooter() {
         aria-hidden="true"
         className="h-[0.68em] overflow-hidden px-1 text-[clamp(3rem,13vw,11rem)] leading-none select-none"
       >
-        <p className="font-display text-center leading-none font-semibold tracking-[-0.07em] whitespace-nowrap text-foreground">
+        <p className="text-center font-display leading-none font-semibold tracking-[-0.07em] whitespace-nowrap text-foreground">
           AMIR SOHAIL
         </p>
       </div>

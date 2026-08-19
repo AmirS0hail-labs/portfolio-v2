@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowUpRight, Mail } from "lucide-react";
 
 import { site } from "@/content/site";
@@ -7,17 +6,38 @@ import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
+import { TrackedExternalLink } from "@/components/tracked-external-link";
+import type { AnalyticsEventName } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-const socials = [
+const socials: {
+  label: string;
+  href: string;
+  Icon: typeof LinkedInIcon | typeof GitHubIcon | typeof Mail;
+  event: AnalyticsEventName;
+  external: boolean;
+}[] = [
   {
     label: "LinkedIn",
     href: site.linkedin,
     Icon: LinkedInIcon,
+    event: "outbound_linkedin",
     external: true,
   },
-  { label: "GitHub", href: site.github, Icon: GitHubIcon, external: true },
-  { label: "Email", href: `mailto:${site.email}`, Icon: Mail, external: false },
+  {
+    label: "GitHub",
+    href: site.github,
+    Icon: GitHubIcon,
+    event: "outbound_github",
+    external: true,
+  },
+  {
+    label: "Email",
+    href: `mailto:${site.email}`,
+    Icon: Mail,
+    event: "outbound_email",
+    external: false,
+  },
 ];
 
 export function Contact() {
@@ -41,27 +61,35 @@ export function Contact() {
 
             <div className="flex flex-col items-center gap-3 sm:flex-row">
               <Button asChild size="lg">
-                <a href={`mailto:${site.email}`}>
+                <TrackedExternalLink
+                  event="outbound_email"
+                  placement="contact"
+                  href={`mailto:${site.email}`}
+                >
                   <Mail className="size-4" />
                   {site.email}
-                </a>
+                </TrackedExternalLink>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link
+                <TrackedExternalLink
+                  event="outbound_linkedin"
+                  placement="contact"
                   href={site.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Connect on LinkedIn
                   <ArrowUpRight className="size-4" />
-                </Link>
+                </TrackedExternalLink>
               </Button>
             </div>
 
             <ul className="mt-2 flex items-center gap-2">
-              {socials.map(({ label, href, Icon, external }) => (
+              {socials.map(({ label, href, Icon, event, external }) => (
                 <li key={label}>
-                  <Link
+                  <TrackedExternalLink
+                    event={event}
+                    placement="contact_icon"
                     href={href}
                     aria-label={label}
                     title={label}
@@ -73,7 +101,7 @@ export function Contact() {
                     )}
                   >
                     <Icon className="size-[18px]" />
-                  </Link>
+                  </TrackedExternalLink>
                 </li>
               ))}
             </ul>

@@ -26,7 +26,7 @@ npm run lint     # eslint
 
 ```
 app/
-  layout.tsx              Root layout: fonts, metadata, JSON-LD, nav + footer, skip link
+  layout.tsx              Root layout: fonts, metadata, JSON-LD, Umami script, nav + footer, skip link
   page.tsx                Home page (assembles all sections)
   globals.css             Design tokens + base styles
   case-studies/[slug]/    Data-driven case study detail pages (SSG)
@@ -35,6 +35,8 @@ app/
   icon.tsx                Favicon (AS monogram, next/og)
   sitemap.ts / robots.ts  SEO route handlers
 components/
+  analytics-script.tsx    Env-gated Umami Cloud tracker (production only)
+  tracked-external-link.tsx  Outbound CTA clicks (email / LinkedIn / GitHub)
   site-nav.tsx            Pill nav + "Contact Me" + mobile Sheet + scrollspy
   site-footer.tsx         Bottom bar with social row
   sections/               Hero, Case Studies, Projects, About, Testimonials, Skills, Contact
@@ -43,7 +45,9 @@ components/
   ui/                     shadcn-style primitives
 content/                  All copy lives here — edit these to update the site
   types.ts site.ts hero.ts case-studies.ts projects.ts about.ts testimonials.ts skills.ts
-lib/utils.ts              cn() helper
+lib/
+  utils.ts                cn() helper
+  analytics.ts            Typed Umami event helper (no-ops without the script)
 ```
 
 ## Editing content
@@ -60,14 +64,31 @@ Each case study visual has a `sensitivity` tier (`public` / `internal` / `synthe
 
 ## Configuration
 
-- `NEXT_PUBLIC_SITE_URL` — canonical site URL used for metadata, `sitemap.xml`, `robots.txt`, and JSON-LD. Defaults to `https://amir-portfolio.vercel.app`. Set this to your real domain in production.
+Copy [`.env.example`](.env.example) and fill in values as needed. Local `npm run dev` should leave the Umami ID empty so localhost does not pollute production stats.
+
+- `NEXT_PUBLIC_SITE_URL` — canonical site URL used for metadata, `sitemap.xml`, `robots.txt`, JSON-LD, and Umami's `data-domains` allowlist. Defaults to `https://amir-portfolio.vercel.app`. Set this to your real domain in production.
+- `NEXT_PUBLIC_UMAMI_WEBSITE_ID` — Umami Cloud website ID. **Set this on Vercel Production only** (not Preview, not local). If unset, the tracker script is not injected.
+- `NEXT_PUBLIC_UMAMI_SCRIPT_URL` — optional. Defaults to `https://cloud.umami.is/script.js`.
+
+### Analytics (Umami Cloud)
+
+Privacy-first pageviews + a few CTA events. Cookieless, no banner, no PII (no emails, raw IPs, or `mailto` URLs in events).
+
+1. Create a free [Umami Cloud](https://cloud.umami.is) Hobby account.
+2. Add a website whose domain matches what visitors will open (`amir-portfolio.vercel.app` is fine; add a custom domain later).
+3. Copy the **Website ID** into `NEXT_PUBLIC_UMAMI_WEBSITE_ID` on the Vercel project, **Production** environment only.
+4. After deploy, log in at [cloud.umami.is](https://cloud.umami.is). You should see visitors, pages (`/`, `/case-studies/tpi`, …), referrers (LinkedIn, Google, Direct, GitHub), countries, device/browser, and events (`cta_contact`, `outbound_email`, `outbound_linkedin`, `outbound_github`).
+
+Pageviews are automatic. Hash sections (`#contact`) are not tracked as pages — the signal for “opened TPI” is the case-study route. Ad blockers may undercount; recruiter Chrome typically does not.
 
 ## Deploy (Vercel)
 
 1. Push this repo to GitHub.
 2. Import it at [vercel.com/new](https://vercel.com/new) — Vercel auto-detects Next.js. No build config needed.
-3. Add an Environment Variable: `NEXT_PUBLIC_SITE_URL = https://your-domain.com`.
-4. Deploy. Add your custom domain under Project → Settings → Domains.
+3. Add Environment Variables:
+   - `NEXT_PUBLIC_SITE_URL` = `https://your-domain.com` (Production + Preview if you want correct canonical URLs on previews).
+   - `NEXT_PUBLIC_UMAMI_WEBSITE_ID` = your Umami website ID (**Production only**).
+4. Deploy. Add your custom domain under Project → Settings → Domains. If the hostname changes, update `NEXT_PUBLIC_SITE_URL` and the domain on the Umami website so `data-domains` still matches.
 
 ## Accessibility & performance
 
