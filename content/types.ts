@@ -1,4 +1,4 @@
-export type AccentColor = "blue" | "violet" | "default";
+export type AccentColor = "rose" | "sage" | "default";
 
 export interface HeadlineLine {
   text: string;

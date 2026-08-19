@@ -12,7 +12,7 @@ export function TechBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md border border-border bg-white/[0.03] px-2.5 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-white/15 hover:text-foreground",
+        "inline-flex items-center rounded-md border border-accent-sage/80 bg-accent-sage/15 px-2.5 py-1 font-mono text-xs text-accent-sage transition-colors hover:border-accent-sage hover:text-foreground",
         className,
       )}
     >

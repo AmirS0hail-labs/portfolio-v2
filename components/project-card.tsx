@@ -20,14 +20,14 @@ export function ProjectCard({ project }: { project: Project }) {
           {project.name}
         </h3>
         <div className="flex items-center gap-2">
-          {project.current ? <Badge variant="violet">Current</Badge> : null}
+          {project.current ? <Badge variant="sage">Current</Badge> : null}
           {isLink ? (
-            <ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+            <ArrowUpRight className="size-4 text-accent-sage transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
           ) : null}
         </div>
       </div>
 
-      <p className="text-sm leading-relaxed text-muted-foreground">
+      <p className="text-sm leading-relaxed text-foreground">
         {project.description}
       </p>
 
@@ -42,7 +42,7 @@ export function ProjectCard({ project }: { project: Project }) {
   );
 
   const className = cn(
-    "group flex h-full flex-col gap-3 rounded-2xl border border-border bg-card p-6 transition-colors hover:border-white/20",
+    "surface-panel group flex h-full flex-col gap-3 rounded-2xl p-6",
   );
 
   return (

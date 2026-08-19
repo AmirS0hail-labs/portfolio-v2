@@ -23,27 +23,19 @@ export function Contact() {
   return (
     <Section id="contact">
       <Reveal>
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card px-6 py-14 text-center sm:px-12 sm:py-20">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-          >
-            <div className="absolute -top-16 -left-16 size-64 rounded-full bg-accent-blue/15 blur-[90px]" />
-            <div className="absolute -right-16 -bottom-16 size-64 rounded-full bg-accent-violet/15 blur-[90px]" />
-          </div>
-
-          <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-2.5 text-xs font-medium tracking-[0.22em] text-muted-foreground uppercase">
-              <span className="h-px w-7 bg-gradient-to-r from-accent-blue to-accent-violet" />
+        <div className="surface-panel rounded-3xl px-6 py-14 text-center sm:px-12 sm:py-20">
+          <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
+            <span className="inline-flex items-center gap-2.5 text-xs font-medium tracking-[0.22em] text-accent-sage uppercase">
+              <span className="h-0.5 w-8 bg-accent-sage" />
               Contact
             </span>
 
             <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-5xl">
               Let&apos;s build something{" "}
-              <span className="text-gradient-brand">reliable</span>.
+              <span className="text-accent-rose">reliable</span>.
             </h2>
 
-            <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p className="max-w-xl text-base leading-relaxed text-foreground sm:text-lg">
               Have an ambiguous problem that needs to become shipped software?
               I&apos;m happy to talk through it. The fastest way to reach me is
               email.
@@ -79,7 +71,7 @@ export function Contact() {
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
                     className={cn(
-                      "flex size-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-white/20 hover:bg-white/5 hover:text-foreground",
+                      "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-colors hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground",
                     )}
                   >
                     <Icon className="size-[18px]" />

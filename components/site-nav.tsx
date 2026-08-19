@@ -35,8 +35,7 @@ const navIcons: Record<string, LucideIcon> = {
   Contact: Mail,
 };
 
-const chromePill =
-  "rounded-full border border-border bg-background/80 backdrop-blur-xl";
+const chromePill = "surface-chrome rounded-full backdrop-blur-xl";
 
 export function SiteNav() {
   const pathname = usePathname();
@@ -76,7 +75,7 @@ export function SiteNav() {
             "inline-flex items-center gap-2 px-2.5 py-1.5 text-sm font-semibold tracking-tight",
           )}
         >
-          <span className="flex size-7 items-center justify-center rounded-full bg-gradient-to-br from-accent-blue to-accent-violet text-xs font-bold text-background">
+          <span className="flex size-7 items-center justify-center rounded-full border border-accent-sage/45 bg-card text-xs font-bold text-foreground">
             AS
           </span>
           <span className="hidden sm:inline">{site.name}</span>
@@ -98,8 +97,8 @@ export function SiteNav() {
                   className={cn(
                     "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors",
                     isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground",
+                      ? "bg-accent-mahogany text-foreground"
+                      : "text-accent-sage hover:bg-accent-mahogany/55 hover:text-foreground",
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
@@ -117,10 +116,10 @@ export function SiteNav() {
           <Button
             asChild
             size="sm"
-            variant="outline"
+            variant="ghost"
             className={cn(
               chromePill,
-              "hidden h-10 px-4 hover:bg-white/5 lg:inline-flex",
+              "hidden h-10 px-4 hover:bg-accent-mahogany/55 lg:inline-flex",
             )}
           >
             <Link href="/#contact">
@@ -132,7 +131,7 @@ export function SiteNav() {
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon"
                 className={cn(chromePill, "size-10 lg:hidden")}
                 aria-label="Open menu"
@@ -152,7 +151,7 @@ export function SiteNav() {
                       <SheetClose asChild>
                         <Link
                           href={item.href}
-                          className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-base font-medium text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+                          className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-base font-medium text-accent-sage transition-colors hover:bg-accent-mahogany/55 hover:text-foreground"
                         >
                           {Icon ? (
                             <Icon

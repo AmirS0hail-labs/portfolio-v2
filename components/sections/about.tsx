@@ -15,7 +15,7 @@ export function About() {
 
       <div className="mt-12 grid gap-10 md:grid-cols-5">
         <Reveal className="md:col-span-3" delay={0.05}>
-          <div className="flex flex-col gap-5 text-[15px] leading-relaxed text-muted-foreground sm:text-base">
+          <div className="flex flex-col gap-5 text-[15px] leading-relaxed text-foreground sm:text-base">
             {about.paragraphs.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
@@ -23,13 +23,13 @@ export function About() {
         </Reveal>
 
         <Reveal className="md:col-span-2" delay={0.12}>
-          <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6">
+          <div className="surface-panel flex flex-col gap-4 rounded-2xl p-6">
             <div className="flex items-start gap-3">
-              <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-white/[0.03] text-accent-blue">
+              <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-accent-sage/40 bg-accent-sage/[0.08] text-accent-sage">
                 <GraduationCap className="size-5" />
               </span>
               <div className="flex flex-col gap-0.5">
-                <span className="text-xs tracking-wider text-muted-foreground uppercase">
+                <span className="text-xs tracking-wider text-accent-sage uppercase">
                   Education
                 </span>
                 <span className="font-medium text-foreground">
@@ -47,11 +47,11 @@ export function About() {
             <div className="h-px bg-border" />
 
             <div className="flex items-start gap-3">
-              <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-white/[0.03] text-accent-violet">
+              <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-accent-sage/40 bg-accent-sage/[0.08] text-accent-sage">
                 <MapPin className="size-5" />
               </span>
               <div className="flex flex-col gap-0.5">
-                <span className="text-xs tracking-wider text-muted-foreground uppercase">
+                <span className="text-xs tracking-wider text-accent-sage uppercase">
                   Based in
                 </span>
                 <span className="font-medium text-foreground">

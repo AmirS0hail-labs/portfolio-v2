@@ -15,24 +15,31 @@ export default function OpengraphImage() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background: "#08080b",
-        backgroundImage:
-          "radial-gradient(circle at 12% 18%, rgba(96,165,250,0.22), transparent 42%), radial-gradient(circle at 88% 85%, rgba(167,139,250,0.22), transparent 42%)",
+        background: "#151A12",
         padding: "72px",
         fontFamily: "sans-serif",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          borderBottom: "2px solid #B5C1A8",
+          paddingBottom: 24,
+        }}
+      >
         <div
           style={{
             width: 20,
             height: 20,
             borderRadius: 20,
-            background: "linear-gradient(135deg, #60a5fa, #a78bfa)",
+            border: "1px solid #EDE4D42E",
+            background: "#4A3F34",
           }}
         />
         <div
-          style={{ fontSize: 30, color: "#a1a1aa" }}
+          style={{ fontSize: 30, color: "#B5C1A8" }}
         >{`${site.name} · ${site.location}`}</div>
       </div>
 
@@ -46,9 +53,9 @@ export default function OpengraphImage() {
           letterSpacing: -4,
         }}
       >
-        <span style={{ color: "#60a5fa" }}>Full-Stack</span>
-        <span style={{ color: "#a78bfa" }}>Software</span>
-        <span style={{ color: "#ededed" }}>Engineer</span>
+        <span style={{ color: "#D17650" }}>Full-Stack</span>
+        <span style={{ color: "#EDE4D4" }}>Software</span>
+        <span style={{ color: "#EDE4D4" }}>Engineer</span>
       </div>
 
       <div
@@ -58,10 +65,10 @@ export default function OpengraphImage() {
           alignItems: "flex-end",
         }}
       >
-        <div style={{ fontSize: 28, color: "#a1a1aa" }}>
+        <div style={{ fontSize: 28, color: "#EDE4D4" }}>
           Rails · React · Next.js · PostgreSQL · AWS
         </div>
-        <div style={{ fontSize: 26, color: "#71717a" }}>
+        <div style={{ fontSize: 26, color: "#B5C1A8" }}>
           linkedin.com/in/amir-sohail5
         </div>
       </div>

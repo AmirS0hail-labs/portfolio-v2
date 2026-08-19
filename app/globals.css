@@ -2,45 +2,50 @@
 @import "tw-animate-css";
 
 /*
- * Dark-only theme. Canvas black with electric blue + violet accents.
- * Tokens follow the shadcn/ui naming convention so vendored UI primitives
- * work out of the box, with extra accent tokens layered on top.
+ * Dark-only muted earth tokens.
+ * Jobs (not a 30-swatch pack):
+ *   canvas     #151A12  olive charcoal
+ *   text       #EDE4D4  warm cream (body copy)
+ *   muted      #C4B5A5  taupe (roles, captions only)
+ *   accent     #D17650  terracotta/rust (hero word, metrics, primary CTA)
+ *   structure  #B5C1A8  medium sage (tags, rules, labels)
+ *   depth      #4A3032  mahogany (nav, borders, hover — not a second hero hue)
+ * Card surface #4A3F34 is taupe-olive/mahogany-brown, lifted off the canvas.
  */
 :root {
   color-scheme: dark;
 
-  --background: #050506;
-  --foreground: #ededed;
+  --background: #151a12;
+  --foreground: #ede4d4;
 
-  --card: #0d0d13;
-  --card-foreground: #ededed;
+  --card: #4a3f34;
+  --card-foreground: #ede4d4;
 
-  --popover: #0d0d13;
-  --popover-foreground: #ededed;
+  --popover: #4a3f34;
+  --popover-foreground: #ede4d4;
 
-  --primary: #60a5fa;
-  --primary-foreground: #050506;
+  --primary: #d17650;
+  --primary-foreground: #151a12;
 
-  --secondary: #16161d;
-  --secondary-foreground: #ededed;
+  --secondary: #3d342c;
+  --secondary-foreground: #ede4d4;
 
-  --muted: #14141b;
-  --muted-foreground: #a1a1aa;
+  --muted: #3d342c;
+  --muted-foreground: #c4b5a5;
 
-  --accent: #1a1a22;
-  --accent-foreground: #f5f5f5;
+  --accent: #52463c;
+  --accent-foreground: #ede4d4;
 
-  --destructive: #ef4444;
-  --destructive-foreground: #fafafa;
+  --destructive: #c4544a;
+  --destructive-foreground: #ede4d4;
 
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: #60a5fa;
+  --accent-rose: #d17650;
+  --accent-sage: #b5c1a8;
+  --accent-mahogany: #4a3032;
 
-  --accent-blue: #60a5fa;
-  --accent-blue-strong: #3b82f6;
-  --accent-violet: #a78bfa;
-  --accent-violet-strong: #8b5cf6;
+  --border: color-mix(in oklab, var(--foreground) 18%, transparent);
+  --input: color-mix(in oklab, var(--foreground) 22%, transparent);
+  --ring: var(--accent-sage);
 
   --radius: 0.9rem;
 }
@@ -74,10 +79,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --color-accent-blue: var(--accent-blue);
-  --color-accent-blue-strong: var(--accent-blue-strong);
-  --color-accent-violet: var(--accent-violet);
-  --color-accent-violet-strong: var(--accent-violet-strong);
+  --color-accent-rose: var(--accent-rose);
+  --color-accent-sage: var(--accent-sage);
+  --color-accent-mahogany: var(--accent-mahogany);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -101,22 +105,56 @@
 
   body {
     background-color: var(--background);
+    background-image: radial-gradient(
+      ellipse 80% 55% at 28% 6%,
+      color-mix(in oklab, var(--foreground) 5.5%, transparent),
+      transparent 58%
+    );
     color: var(--foreground);
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  ::selection {
-    background-color: color-mix(
-      in oklab,
-      var(--accent-violet) 35%,
-      transparent
-    );
-    color: #ffffff;
+  header,
+  main,
+  footer {
+    position: relative;
+    z-index: 1;
   }
 
-  /* Visible, consistent keyboard focus. */
+  /* Canvas vignette — darker corners, light stays upper-left. */
+  body::before {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(
+      ellipse 125% 95% at 30% 8%,
+      transparent 38%,
+      color-mix(in oklab, var(--background) 55%, black) 100%
+    );
+    opacity: 0.55;
+  }
+
+  /* Film grain ~3%, existing tokens only. */
+  body::after {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.032;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--accent-rose) 32%, transparent);
+    color: var(--foreground);
+  }
+
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
@@ -129,7 +167,6 @@
   }
 }
 
-/* Respect users who prefer reduced motion: disable smooth scroll + heavy motion. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -146,22 +183,101 @@
 }
 
 @layer utilities {
-  .text-gradient-brand {
-    background-image: linear-gradient(
-      100deg,
-      var(--accent-blue),
-      var(--accent-violet)
-    );
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-
-  /* Quiet canvas grid — hairline, not a dotted SaaS texture. */
   .bg-grid {
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      linear-gradient(
+        color-mix(in oklab, var(--accent-sage) 22%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--accent-sage) 22%, transparent) 1px,
+        transparent 1px
+      );
     background-size: 72px 72px;
+  }
+
+  /*
+   * Directional light, upper-left, warm.
+   * Cream/sand on the lit edge; mahogany + olive in the unlit shade;
+   * sage only as bounce in the shadow.
+   */
+  .surface-panel {
+    background-color: var(--card);
+    background-image: linear-gradient(
+      150deg,
+      color-mix(in oklab, var(--foreground) 9%, transparent) 0%,
+      transparent 38%,
+      color-mix(in oklab, var(--accent-sage) 7%, transparent) 78%,
+      color-mix(in oklab, var(--accent-mahogany) 22%, var(--background)) 100%
+    );
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: color-mix(in oklab, var(--foreground) 26%, transparent);
+    border-left-color: color-mix(in oklab, var(--foreground) 18%, transparent);
+    border-right-color: color-mix(
+      in oklab,
+      var(--accent-mahogany) 42%,
+      transparent
+    );
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--accent-mahogany) 50%,
+      transparent
+    );
+    box-shadow:
+      inset 1px 1px 0 color-mix(in oklab, var(--foreground) 22%, transparent),
+      inset -1px -1px 0 color-mix(in oklab, var(--accent-sage) 12%, transparent),
+      inset -14px -18px 28px -20px
+        color-mix(in oklab, var(--accent-mahogany) 32%, transparent),
+      5px 10px 22px -14px
+        color-mix(in oklab, var(--accent-mahogany) 45%, var(--background));
+  }
+
+  .surface-panel:hover {
+    border-top-color: color-mix(in oklab, var(--foreground) 32%, transparent);
+    border-left-color: color-mix(in oklab, var(--foreground) 22%, transparent);
+    border-right-color: color-mix(
+      in oklab,
+      var(--accent-mahogany) 55%,
+      transparent
+    );
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--accent-mahogany) 62%,
+      transparent
+    );
+  }
+
+  .surface-chrome {
+    background-color: color-mix(in oklab, var(--background) 72%, var(--card));
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: color-mix(in oklab, var(--foreground) 24%, transparent);
+    border-left-color: color-mix(in oklab, var(--foreground) 16%, transparent);
+    border-right-color: color-mix(
+      in oklab,
+      var(--accent-mahogany) 40%,
+      transparent
+    );
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--accent-mahogany) 48%,
+      transparent
+    );
+    box-shadow:
+      inset 1px 1px 0 color-mix(in oklab, var(--foreground) 16%, transparent),
+      inset -1px -1px 0 color-mix(in oklab, var(--accent-sage) 10%, transparent),
+      inset -8px -10px 16px -12px
+        color-mix(in oklab, var(--accent-mahogany) 26%, transparent),
+      4px 8px 16px -12px color-mix(in oklab, var(--background) 70%, black);
+  }
+
+  /* Primary CTA: inner top highlight only — no outer halo. */
+  .cta-lit {
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--foreground) 32%, transparent),
+      inset 0 -1px 0
+        color-mix(in oklab, var(--accent-mahogany) 22%, transparent);
   }
 }

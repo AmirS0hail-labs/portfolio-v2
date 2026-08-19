@@ -30,16 +30,16 @@ export function Testimonials() {
             delay={index * 0.08}
             className="h-full"
           >
-            <figure className="flex h-full flex-col gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <figure className="surface-panel flex h-full flex-col gap-5 rounded-2xl p-6 sm:p-8">
               <Quote
-                className="size-7 text-accent-violet/70"
+                className="size-7 text-accent-sage/70"
                 aria-hidden="true"
               />
               <blockquote className="text-[15px] leading-relaxed text-foreground/90">
                 {testimonial.quote}
               </blockquote>
               <figcaption className="mt-auto flex items-center gap-3 pt-2">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-blue/80 to-accent-violet/80 text-sm font-semibold text-background">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-accent-sage/45 bg-muted text-sm font-semibold text-foreground">
                   {initials(testimonial.name)}
                 </span>
                 <span className="flex flex-col">

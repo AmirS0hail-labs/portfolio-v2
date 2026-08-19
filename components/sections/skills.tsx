@@ -18,8 +18,8 @@ export function Skills() {
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((group, index) => (
           <Reveal key={group.category} delay={index * 0.05} className="h-full">
-            <div className="flex h-full flex-col gap-4 rounded-2xl border border-border bg-card p-6">
-              <h3 className="text-sm font-semibold tracking-wider text-foreground uppercase">
+            <div className="surface-panel flex h-full flex-col gap-4 rounded-2xl p-6">
+              <h3 className="text-sm font-semibold tracking-wider text-accent-sage uppercase">
                 {group.category}
               </h3>
               <ul className="flex flex-wrap gap-2">

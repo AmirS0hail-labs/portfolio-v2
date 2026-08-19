@@ -29,22 +29,22 @@ const sensitivityConfig: Record<
 > = {
   public: {
     label: "Public asset",
-    chip: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
+    chip: "border-accent-sage/80 bg-accent-sage/15 text-accent-sage",
     Icon: Globe,
   },
   internal: {
     label: "Internal — redacted only",
-    chip: "border-amber-400/30 bg-amber-400/10 text-amber-300",
+    chip: "border-accent-sage/80 bg-accent-sage/15 text-accent-sage",
     Icon: Lock,
   },
   synthetic: {
     label: "Synthetic / redacted only",
-    chip: "border-accent-violet/30 bg-accent-violet/10 text-accent-violet",
+    chip: "border-accent-sage/80 bg-accent-sage/15 text-accent-sage",
     Icon: ShieldAlert,
   },
   pending: {
     label: "Asset pending",
-    chip: "border-accent-blue/30 bg-accent-blue/10 text-accent-blue",
+    chip: "border-accent-sage/80 bg-accent-sage/15 text-accent-sage",
     Icon: Clock,
   },
 };
@@ -77,7 +77,7 @@ export function MediaPlaceholder({
     return (
       <figure
         className={cn(
-          "group relative overflow-hidden rounded-xl border border-border bg-muted",
+          "surface-panel group relative overflow-hidden rounded-xl",
           aspect,
           className,
         )}
@@ -120,7 +120,7 @@ export function MediaPlaceholder({
   return (
     <figure
       className={cn(
-        "relative flex flex-col overflow-hidden rounded-xl border border-dashed border-white/12 bg-card/60",
+        "surface-panel relative flex flex-col overflow-hidden rounded-xl",
         aspect,
         className,
       )}
@@ -136,7 +136,7 @@ export function MediaPlaceholder({
       </span>
 
       <div className="bg-grid flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center">
-        <span className="flex size-12 items-center justify-center rounded-full border border-border bg-white/[0.03] text-muted-foreground">
+        <span className="flex size-12 items-center justify-center rounded-full border border-accent-sage/40 bg-accent-sage/[0.08] text-accent-sage">
           <KindIcon className="size-5" />
         </span>
         <figcaption className="text-sm font-medium text-foreground/90">

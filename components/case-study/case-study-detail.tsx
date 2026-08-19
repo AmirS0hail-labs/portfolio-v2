@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Check, ShieldAlert } from "lucide-react";
 
-import type { AccentColor, CaseStudy } from "@/content/types";
+import type { CaseStudy } from "@/content/types";
 import { Badge } from "@/components/ui/badge";
 import { TechBadge } from "@/components/tech-badge";
 import { MediaPlaceholder } from "@/components/media-placeholder";
@@ -9,18 +9,6 @@ import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
 
 type NavLink = { slug: string; title: string };
-
-const accentText: Record<AccentColor, string> = {
-  blue: "text-accent-blue",
-  violet: "text-accent-violet",
-  default: "text-foreground",
-};
-
-const accentBullet: Record<AccentColor, string> = {
-  blue: "text-accent-blue",
-  violet: "text-accent-violet",
-  default: "text-muted-foreground",
-};
 
 export function CaseStudyDetail({
   caseStudy,
@@ -35,7 +23,7 @@ export function CaseStudyDetail({
     <article className="mx-auto w-full max-w-4xl px-6 pt-28 pb-24 sm:pt-32">
       <Link
         href="/#case-studies"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="inline-flex items-center gap-1.5 text-sm text-accent-sage transition-colors hover:text-foreground"
       >
         <ArrowLeft className="size-4" />
         All case studies
@@ -43,9 +31,7 @@ export function CaseStudyDetail({
 
       <header className="mt-8 flex flex-col gap-5 border-b border-border pb-10">
         <div className="flex flex-wrap items-center gap-3">
-          <Badge variant={caseStudy.accent === "violet" ? "violet" : "blue"}>
-            {caseStudy.org}
-          </Badge>
+          <Badge variant="sage">{caseStudy.org}</Badge>
           <span className="text-sm text-muted-foreground">
             {caseStudy.role}
           </span>
@@ -55,23 +41,18 @@ export function CaseStudyDetail({
           {caseStudy.title}
         </h1>
 
-        <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground">
+        <p className="max-w-3xl text-lg leading-relaxed text-foreground">
           {caseStudy.summary}
         </p>
 
         {caseStudy.metric ? (
-          <div className="mt-2 flex flex-wrap items-end gap-x-4 gap-y-2 rounded-2xl border border-border bg-white/[0.02] px-6 py-5">
+          <div className="mt-2 flex flex-wrap items-end gap-x-4 gap-y-2 rounded-2xl border border-border bg-background px-6 py-5">
             <div className="flex items-baseline gap-3">
               <span className="text-2xl text-muted-foreground line-through decoration-white/30">
                 {caseStudy.metric.from}
               </span>
               <ArrowRight className="size-5 text-muted-foreground" />
-              <span
-                className={cn(
-                  "text-4xl font-semibold tracking-tight",
-                  accentText[caseStudy.accent],
-                )}
-              >
+              <span className="text-4xl font-semibold tracking-tight text-accent-rose">
                 {caseStudy.metric.to}
               </span>
             </div>
@@ -92,13 +73,8 @@ export function CaseStudyDetail({
             <ul className="flex flex-col gap-3">
               {caseStudy.contributions.map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <Check
-                    className={cn(
-                      "mt-1 size-4 shrink-0",
-                      accentBullet[caseStudy.accent],
-                    )}
-                  />
-                  <span className="text-[15px] leading-relaxed text-muted-foreground">
+                  <Check className="mt-1 size-4 shrink-0 text-accent-sage" />
+                  <span className="text-[15px] leading-relaxed text-foreground">
                     {item}
                   </span>
                 </li>
@@ -112,7 +88,7 @@ export function CaseStudyDetail({
             <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
               Result
             </h2>
-            <p className="max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+            <p className="max-w-3xl text-[15px] leading-relaxed text-foreground">
               {caseStudy.result}
             </p>
           </section>
@@ -152,8 +128,8 @@ export function CaseStudyDetail({
         </Reveal>
 
         {caseStudy.privacyNote ? (
-          <div className="flex items-start gap-3 rounded-xl border border-border bg-white/[0.02] p-5">
-            <ShieldAlert className="mt-0.5 size-5 shrink-0 text-accent-violet" />
+          <div className="flex items-start gap-3 rounded-xl border border-border bg-background/40 p-5">
+            <ShieldAlert className="mt-0.5 size-5 shrink-0 text-accent-sage" />
             <p className="text-sm leading-relaxed text-muted-foreground">
               {caseStudy.privacyNote}
             </p>
@@ -170,10 +146,10 @@ export function CaseStudyDetail({
             href={`/case-studies/${prev.slug}`}
             className="group flex max-w-[48%] flex-col gap-1 text-left"
           >
-            <span className="inline-flex items-center gap-1 text-xs tracking-wider text-muted-foreground uppercase">
+            <span className="inline-flex items-center gap-1 text-xs tracking-wider text-accent-sage uppercase">
               <ArrowLeft className="size-3" /> Previous
             </span>
-            <span className="truncate text-sm font-medium text-foreground group-hover:text-accent-blue">
+            <span className="truncate text-sm font-medium text-foreground group-hover:text-foreground">
               {prev.title}
             </span>
           </Link>
@@ -185,10 +161,10 @@ export function CaseStudyDetail({
             href={`/case-studies/${next.slug}`}
             className="group flex max-w-[48%] flex-col gap-1 text-right"
           >
-            <span className="inline-flex items-center justify-end gap-1 text-xs tracking-wider text-muted-foreground uppercase">
+            <span className="inline-flex items-center justify-end gap-1 text-xs tracking-wider text-accent-sage uppercase">
               Next <ArrowRight className="size-3" />
             </span>
-            <span className="truncate text-sm font-medium text-foreground group-hover:text-accent-blue">
+            <span className="truncate text-sm font-medium text-foreground group-hover:text-foreground">
               {next.title}
             </span>
           </Link>

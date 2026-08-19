@@ -6,14 +6,14 @@ import type { AccentColor } from "@/content/types";
 import { cn } from "@/lib/utils";
 
 const accentDot: Record<AccentColor, string> = {
-  blue: "bg-accent-blue",
-  violet: "bg-accent-violet",
+  rose: "bg-accent-rose",
+  sage: "bg-accent-sage",
   default: "bg-muted-foreground",
 };
 
 const accentRing: Record<AccentColor, string> = {
-  blue: "border-accent-blue/30",
-  violet: "border-accent-violet/30",
+  rose: "border-accent-rose/30",
+  sage: "border-accent-sage/80",
   default: "border-border",
 };
 
@@ -89,7 +89,7 @@ export function FloatingPill({
               }
       }
       className={cn(
-        "pointer-events-none inline-flex shrink-0 items-center gap-1.5 rounded-full border bg-background/90 px-2.5 py-1 font-mono text-[10px] tracking-wide text-foreground/90 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md select-none sm:text-[11px]",
+        "pointer-events-none inline-flex shrink-0 items-center gap-1.5 rounded-full border border-accent-sage/80 bg-background/90 px-2.5 py-1 font-mono text-[10px] tracking-wide text-accent-sage backdrop-blur-md select-none sm:text-[11px]",
         accentRing[accent],
         className,
       )}

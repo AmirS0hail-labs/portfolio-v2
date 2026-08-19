@@ -26,8 +26,8 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? (
-        <span className="inline-flex items-center gap-2.5 text-xs font-medium tracking-[0.22em] text-muted-foreground uppercase">
-          <span className="h-px w-7 bg-gradient-to-r from-accent-blue to-accent-violet" />
+        <span className="inline-flex items-center gap-2.5 text-xs font-medium tracking-[0.22em] text-accent-sage uppercase">
+          <span className="h-0.5 w-8 bg-accent-sage" />
           {eyebrow}
         </span>
       ) : null}
@@ -37,7 +37,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={cn(
-            "max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg",
+            "max-w-2xl text-base leading-relaxed text-foreground/90 sm:text-lg",
             align === "center" && "mx-auto",
           )}
         >

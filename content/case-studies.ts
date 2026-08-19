@@ -62,7 +62,7 @@ export const caseStudies: CaseStudy[] = [
         aspect: "wide",
       },
     ],
-    accent: "blue",
+    accent: "rose",
   },
   {
     slug: "gsc-indexing",
@@ -107,7 +107,7 @@ export const caseStudies: CaseStudy[] = [
         aspect: "video",
       },
     ],
-    accent: "violet",
+    accent: "rose",
   },
   {
     slug: "reconciliation-tool",
@@ -143,7 +143,7 @@ export const caseStudies: CaseStudy[] = [
         aspect: "wide",
       },
     ],
-    accent: "blue",
+    accent: "rose",
     privacyNote:
       "Domain, client, and data details are intentionally omitted. This tool is described generically by design — it ran fully local, offline, and read-only.",
   },

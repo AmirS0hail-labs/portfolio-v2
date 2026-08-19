@@ -10,8 +10,8 @@ import { FloatingPill } from "@/components/floating-pill";
 import { cn } from "@/lib/utils";
 
 const accentText: Record<AccentColor, string> = {
-  blue: "text-accent-blue",
-  violet: "text-accent-violet",
+  rose: "text-accent-rose",
+  sage: "text-accent-sage",
   default: "text-foreground",
 };
 
@@ -88,7 +88,7 @@ export function Hero() {
               {hero.headline[1].text}
               <span
                 aria-hidden="true"
-                className="mt-2 block font-mono text-xs tracking-wide text-muted-foreground sm:absolute sm:top-[0.32em] sm:left-full sm:mt-0 sm:ml-6 sm:text-sm sm:whitespace-nowrap"
+                className="mt-2 block font-mono text-xs tracking-wide text-accent-sage sm:absolute sm:top-[0.32em] sm:left-full sm:mt-0 sm:ml-6 sm:text-sm sm:whitespace-nowrap"
               >
                 {"// "}
                 {islamabad.label}
@@ -126,7 +126,7 @@ export function Hero() {
                 animate: { opacity: 1, y: 0 },
                 transition: { duration: 0.6, delay: 0.72, ease },
               })}
-          className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-10 sm:text-lg"
+          className="mt-8 max-w-xl text-base leading-relaxed text-foreground sm:mt-10 sm:text-lg"
         >
           {hero.subheadline}
         </MotionP>
