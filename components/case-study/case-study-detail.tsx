@@ -10,6 +10,24 @@ import { cn } from "@/lib/utils";
 
 type NavLink = { slug: string; title: string };
 
+function DetailHeading({
+  index,
+  children,
+}: {
+  index: string;
+  children: string;
+}) {
+  return (
+    <h2 className="flex items-center gap-3 font-display text-xl font-semibold tracking-tight sm:text-2xl">
+      <span className="font-mono text-xs font-medium tracking-wider text-accent-sage">
+        {index}
+      </span>
+      <span className="h-px w-6 bg-accent-sage" aria-hidden="true" />
+      {children}
+    </h2>
+  );
+}
+
 export function CaseStudyDetail({
   caseStudy,
   prev,
@@ -20,10 +38,10 @@ export function CaseStudyDetail({
   next?: NavLink;
 }) {
   return (
-    <article className="mx-auto w-full max-w-4xl px-6 pt-28 pb-24 sm:pt-32">
+    <article className="mx-auto w-full max-w-6xl px-3 pt-28 pb-24 sm:px-4 sm:pt-32 lg:px-5">
       <Link
         href="/#case-studies"
-        className="inline-flex items-center gap-1.5 text-sm text-accent-sage transition-colors hover:text-foreground"
+        className="inline-flex items-center gap-1.5 text-sm text-accent-sage transition-[color,transform] duration-300 hover:text-foreground motion-safe:hover:-translate-x-0.5"
       >
         <ArrowLeft className="size-4" />
         All case studies
@@ -37,7 +55,7 @@ export function CaseStudyDetail({
           </span>
         </div>
 
-        <h1 className="font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl">
+        <h1 className="font-display max-w-4xl text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl">
           {caseStudy.title}
         </h1>
 
@@ -46,31 +64,27 @@ export function CaseStudyDetail({
         </p>
 
         {caseStudy.metric ? (
-          <div className="mt-2 flex flex-wrap items-end gap-x-4 gap-y-2 rounded-2xl border border-border bg-background px-6 py-5">
-            <div className="flex items-baseline gap-3">
-              <span className="text-2xl text-muted-foreground line-through decoration-white/30">
-                {caseStudy.metric.from}
-              </span>
-              <ArrowRight className="size-5 text-muted-foreground" />
-              <span className="text-4xl font-semibold tracking-tight text-accent-rose">
-                {caseStudy.metric.to}
-              </span>
-            </div>
+          <p className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="text-lg text-muted-foreground line-through decoration-white/30">
+              {caseStudy.metric.from}
+            </span>
+            <span className="text-muted-foreground">→</span>
+            <span className="font-display text-3xl font-semibold tracking-tight text-accent-rose sm:text-4xl">
+              {caseStudy.metric.to}
+            </span>
             <span className="text-sm text-muted-foreground">
               {caseStudy.metric.label}
               {caseStudy.metric.note ? ` · ${caseStudy.metric.note}` : ""}
             </span>
-          </div>
+          </p>
         ) : null}
       </header>
 
       <div className="mt-12 flex flex-col gap-14">
         <Reveal>
           <section className="flex flex-col gap-5">
-            <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
-              What I built
-            </h2>
-            <ul className="flex flex-col gap-3">
+            <DetailHeading index="01">What I built</DetailHeading>
+            <ul className="flex max-w-3xl flex-col gap-3">
               {caseStudy.contributions.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <Check className="mt-1 size-4 shrink-0 text-accent-sage" />
@@ -85,9 +99,7 @@ export function CaseStudyDetail({
 
         <Reveal>
           <section className="flex flex-col gap-4">
-            <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
-              Result
-            </h2>
+            <DetailHeading index="02">Result</DetailHeading>
             <p className="max-w-3xl text-[15px] leading-relaxed text-foreground">
               {caseStudy.result}
             </p>
@@ -96,17 +108,22 @@ export function CaseStudyDetail({
 
         <Reveal>
           <section className="flex flex-col gap-5">
-            <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
-              A look at it
-            </h2>
+            <DetailHeading index="03">A look at it</DetailHeading>
             <div
               className={cn(
-                "grid gap-4",
-                caseStudy.visuals.length > 1 && "sm:grid-cols-2",
+                "grid items-stretch gap-4",
+                caseStudy.visuals.length === 1 && "max-w-3xl",
+                caseStudy.visuals.length === 2 && "sm:grid-cols-2",
+                caseStudy.visuals.length >= 3 &&
+                  "sm:grid-cols-2 lg:grid-cols-3",
               )}
             >
               {caseStudy.visuals.map((visual) => (
-                <MediaPlaceholder key={visual.caption} visual={visual} />
+                <MediaPlaceholder
+                  key={visual.caption}
+                  visual={visual}
+                  className="h-full w-full aspect-[16/10]"
+                />
               ))}
             </div>
           </section>
@@ -114,9 +131,7 @@ export function CaseStudyDetail({
 
         <Reveal>
           <section className="flex flex-col gap-4">
-            <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
-              Stack
-            </h2>
+            <DetailHeading index="04">Stack</DetailHeading>
             <ul className="flex flex-wrap gap-2">
               {caseStudy.stack.map((tech) => (
                 <li key={tech}>
@@ -128,7 +143,7 @@ export function CaseStudyDetail({
         </Reveal>
 
         {caseStudy.privacyNote ? (
-          <div className="flex items-start gap-3 rounded-xl border border-border bg-background/40 p-5">
+          <div className="flex max-w-3xl items-start gap-3 rounded-xl border border-border bg-background/40 p-5">
             <ShieldAlert className="mt-0.5 size-5 shrink-0 text-accent-sage" />
             <p className="text-sm leading-relaxed text-muted-foreground">
               {caseStudy.privacyNote}
@@ -139,17 +154,18 @@ export function CaseStudyDetail({
 
       <nav
         aria-label="More case studies"
-        className="mt-16 flex items-center justify-between gap-4 border-t border-border pt-8"
+        className="mt-16 flex items-center justify-between gap-6 border-t border-border pt-8"
       >
         {prev ? (
           <Link
             href={`/case-studies/${prev.slug}`}
-            className="group flex max-w-[48%] flex-col gap-1 text-left"
+            className="group flex max-w-[48%] flex-col gap-1 text-left transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-x-0.5"
           >
-            <span className="inline-flex items-center gap-1 text-xs tracking-wider text-accent-sage uppercase">
-              <ArrowLeft className="size-3" /> Previous
+            <span className="inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-accent-sage uppercase transition-colors group-hover:text-foreground">
+              <ArrowLeft className="size-3 transition-transform duration-300 group-hover:-translate-x-0.5" />
+              Previous
             </span>
-            <span className="truncate text-sm font-medium text-foreground group-hover:text-foreground">
+            <span className="truncate text-sm font-medium text-foreground">
               {prev.title}
             </span>
           </Link>
@@ -159,12 +175,13 @@ export function CaseStudyDetail({
         {next ? (
           <Link
             href={`/case-studies/${next.slug}`}
-            className="group flex max-w-[48%] flex-col gap-1 text-right"
+            className="group flex max-w-[48%] flex-col gap-1 text-right transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:translate-x-0.5"
           >
-            <span className="inline-flex items-center justify-end gap-1 text-xs tracking-wider text-accent-sage uppercase">
-              Next <ArrowRight className="size-3" />
+            <span className="inline-flex items-center justify-end gap-1.5 font-mono text-xs tracking-wider text-accent-sage uppercase transition-colors group-hover:text-foreground">
+              Next
+              <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
             </span>
-            <span className="truncate text-sm font-medium text-foreground group-hover:text-foreground">
+            <span className="truncate text-sm font-medium text-foreground">
               {next.title}
             </span>
           </Link>

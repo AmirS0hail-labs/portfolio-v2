@@ -18,21 +18,22 @@ export function Testimonials() {
     <Section id="testimonials" className="py-16 sm:py-20">
       <Reveal>
         <SectionHeading
+          index="04"
           eyebrow="Testimonials"
           title="What people I've worked with say"
         />
       </Reveal>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
+      <div className="mt-12 grid gap-5 md:grid-cols-2">
         {testimonials.map((testimonial, index) => (
           <Reveal
             key={testimonial.name}
             delay={index * 0.08}
             className="h-full"
           >
-            <figure className="surface-panel flex h-full flex-col gap-5 rounded-2xl p-6 sm:p-8">
+            <figure className="surface-panel flex h-full flex-col gap-4 rounded-2xl p-5 sm:p-6">
               <Quote
-                className="size-7 text-accent-sage/70"
+                className="size-5 text-accent-sage/55"
                 aria-hidden="true"
               />
               <blockquote className="text-[15px] leading-relaxed text-foreground/90">

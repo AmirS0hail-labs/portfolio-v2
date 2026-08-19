@@ -10,20 +10,20 @@ export function About() {
   return (
     <Section id="about">
       <Reveal>
-        <SectionHeading eyebrow="About" title="A little about me" />
+        <SectionHeading eyebrow="About" index="03" title="A little about me" />
       </Reveal>
 
-      <div className="mt-12 grid gap-10 md:grid-cols-5">
-        <Reveal className="md:col-span-3" delay={0.05}>
-          <div className="flex flex-col gap-5 text-[15px] leading-relaxed text-foreground sm:text-base">
+      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20.5rem] lg:items-start">
+        <Reveal delay={0.05}>
+          <div className="flex max-w-2xl flex-col gap-5 text-[15px] leading-relaxed text-foreground sm:text-base">
             {about.paragraphs.map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
           </div>
         </Reveal>
 
-        <Reveal className="md:col-span-2" delay={0.12}>
-          <div className="surface-panel flex flex-col gap-4 rounded-2xl p-6">
+        <Reveal delay={0.12}>
+          <div className="surface-panel flex flex-col gap-4 rounded-2xl p-5">
             <div className="flex items-start gap-3">
               <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-accent-sage/40 bg-accent-sage/[0.08] text-accent-sage">
                 <GraduationCap className="size-5" />

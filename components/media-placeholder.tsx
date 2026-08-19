@@ -120,7 +120,7 @@ export function MediaPlaceholder({
   return (
     <figure
       className={cn(
-        "surface-panel relative flex flex-col overflow-hidden rounded-xl",
+        "surface-panel relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-0.5",
         aspect,
         className,
       )}
@@ -135,15 +135,15 @@ export function MediaPlaceholder({
         {sensitivity.label}
       </span>
 
-      <div className="bg-grid flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center">
-        <span className="flex size-12 items-center justify-center rounded-full border border-accent-sage/40 bg-accent-sage/[0.08] text-accent-sage">
+      <div className="bg-grid flex min-h-0 flex-1 flex-col items-center justify-center gap-3 p-6 text-center">
+        <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-accent-sage/40 bg-accent-sage/[0.08] text-accent-sage">
           <KindIcon className="size-5" />
         </span>
-        <figcaption className="text-sm font-medium text-foreground/90">
+        <figcaption className="line-clamp-2 text-sm font-medium text-foreground/90">
           {visual.caption}
         </figcaption>
         {visual.note ? (
-          <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">
+          <p className="line-clamp-3 max-w-xs text-xs leading-relaxed text-muted-foreground">
             {visual.note}
           </p>
         ) : null}

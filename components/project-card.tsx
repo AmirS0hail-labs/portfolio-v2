@@ -42,12 +42,12 @@ export function ProjectCard({ project }: { project: Project }) {
   );
 
   const className = cn(
-    "surface-panel group flex h-full flex-col gap-3 rounded-2xl p-6",
+    "surface-panel group flex h-full flex-col gap-3 rounded-2xl p-5",
   );
 
   return (
     <motion.div
-      whileHover={shouldReduceMotion ? undefined : { y: -3 }}
+      whileHover={shouldReduceMotion ? undefined : { y: -2 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="h-full"
     >

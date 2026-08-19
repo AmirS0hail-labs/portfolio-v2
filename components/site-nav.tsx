@@ -95,10 +95,10 @@ export function SiteNav() {
                 <Link
                   href={item.href}
                   className={cn(
-                    "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                    "inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-[background-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
                     isActive
                       ? "bg-accent-mahogany text-foreground"
-                      : "text-accent-sage hover:bg-accent-mahogany/55 hover:text-foreground",
+                      : "text-accent-sage hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-px",
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >

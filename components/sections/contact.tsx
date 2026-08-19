@@ -5,6 +5,7 @@ import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { Section } from "@/components/section";
+import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/lib/utils";
 
@@ -23,23 +24,20 @@ export function Contact() {
   return (
     <Section id="contact">
       <Reveal>
-        <div className="surface-panel rounded-3xl px-6 py-14 text-center sm:px-12 sm:py-20">
-          <div className="mx-auto flex max-w-2xl flex-col items-center gap-6">
-            <span className="inline-flex items-center gap-2.5 text-xs font-medium tracking-[0.22em] text-accent-sage uppercase">
-              <span className="h-0.5 w-8 bg-accent-sage" />
-              Contact
-            </span>
-
-            <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-5xl">
-              Let&apos;s build something{" "}
-              <span className="text-accent-rose">reliable</span>.
-            </h2>
-
-            <p className="max-w-xl text-base leading-relaxed text-foreground sm:text-lg">
-              Have an ambiguous problem that needs to become shipped software?
-              I&apos;m happy to talk through it. The fastest way to reach me is
-              email.
-            </p>
+        <div className="surface-panel rounded-3xl px-5 py-14 text-center sm:px-12 sm:py-20">
+          <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-6">
+            <SectionHeading
+              index="06"
+              eyebrow="Contact"
+              align="center"
+              title={
+                <>
+                  Let&apos;s build something{" "}
+                  <span className="text-accent-rose">reliable</span>.
+                </>
+              }
+              description="Have an ambiguous problem that needs to become shipped software? I'm happy to talk through it. The fastest way to reach me is email."
+            />
 
             <div className="flex flex-col items-center gap-3 sm:flex-row">
               <Button asChild size="lg">
@@ -71,7 +69,7 @@ export function Contact() {
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
                     className={cn(
-                      "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-colors hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground",
+                      "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
                     )}
                   >
                     <Icon className="size-[18px]" />

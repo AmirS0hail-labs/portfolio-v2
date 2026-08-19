@@ -10,6 +10,7 @@ export function Skills() {
     <Section id="skills">
       <Reveal>
         <SectionHeading
+          index="05"
           eyebrow="Skills"
           title="The tools I reach for"
           description="Grouped by where they sit in the stack. Backend-leaning, but comfortable end to end."
@@ -20,10 +21,10 @@ export function Skills() {
         <TechMarquee />
       </div>
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((group, index) => (
           <Reveal key={group.category} delay={index * 0.05} className="h-full">
-            <div className="surface-panel flex h-full flex-col gap-4 rounded-2xl p-6">
+            <div className="surface-panel flex h-full flex-col gap-3 rounded-2xl p-5">
               <h3 className="text-sm font-semibold tracking-wider text-accent-sage uppercase">
                 {group.category}
               </h3>

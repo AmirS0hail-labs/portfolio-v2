@@ -12,7 +12,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "mx-auto w-full max-w-5xl scroll-mt-24 px-6 py-20 sm:py-28",
+        "mx-auto w-full max-w-6xl scroll-mt-24 px-3 py-20 sm:px-4 sm:py-28 lg:px-5",
         className,
       )}
       {...props}
