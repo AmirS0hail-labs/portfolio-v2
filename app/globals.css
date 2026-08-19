@@ -2,8 +2,8 @@
 @import "tw-animate-css";
 
 /*
- * Dark-only muted earth tokens.
- * Jobs (not a 30-swatch pack):
+ * LOCKED muted earth theme — do not retune hex or jobs unless explicitly asked.
+ * Dark-only tokens (not a 30-swatch pack):
  *   canvas     #151A12  olive charcoal
  *   text       #EDE4D4  warm cream (body copy)
  *   muted      #C4B5A5  taupe (roles, captions only)

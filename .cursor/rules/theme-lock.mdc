@@ -1,0 +1,36 @@
+---
+description: Locked muted-earth theme — do not retune colors unless the user explicitly unlocks them
+alwaysApply: false
+---
+# Theme lock (muted earth)
+
+Color and lighting are **locked**. Do not retune hex, jobs, or add hues unless the user explicitly asks to reopen the palette.
+
+## Tokens (jobs, not a swatch pack)
+
+| Token | Hex | Job |
+| --- | --- | --- |
+| canvas | `#151A12` | olive charcoal background |
+| card | `#4A3F34` | taupe-olive / mahogany-brown surfaces |
+| text | `#EDE4D4` | warm cream body and headings |
+| muted | `#C4B5A5` | taupe for roles/captions only |
+| accent | `#D17650` | terracotta/rust — hero word, metrics, primary CTA only |
+| sage | `#B5C1A8` | tags, section rules, labels |
+| mahogany | `#4A3032` | nav active, borders, hover depth — not a second hero hue |
+
+Source of truth: `app/globals.css` (`--background`, `--card`, `--foreground`, `--accent-rose`, `--accent-sage`, `--accent-mahogany`).
+
+## Do not
+
+- Change these hex values or invent mustard, sky blue, violet, mauve, extra pinks
+- Paint large backgrounds or body copy in rust/peach
+- Use rust on card/project descriptions (body = cream)
+- Clone a sitcom interior or name films/shows on the site
+- Claim designer identity; stay engineer-first
+- Rewrite locked case-study copy
+
+## Lighting (also locked)
+
+Upper-left warm light. `.surface-panel` / `.surface-chrome`: cream highlight on the lit edge, mahogany/olive on the unlit side. Canvas vignette + ~3% grain. Primary CTA (`.cta-lit`) gets an **inner** top highlight, not an outer halo. Sage in shadows only as bounce.
+
+Next work: composition, type, motion, content — not palette.
