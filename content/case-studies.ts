@@ -18,7 +18,7 @@ export const caseStudies: CaseStudy[] = [
       "Contributed Spring Boot and Django services where delivery required it.",
     ],
     result:
-      "Improved company landing-screen conversion from 3.28% (Feb 2026) to 11.76% (May 2026) through experimentation, UX, and performance work. Shipped a stable, frequently-released funnel plus internal tooling that is actively used by producers and admins.",
+      "Company landing-screen conversion improved from 3.28% (Feb 2026) to 11.76% (May 2026) over a period of funnel experimentation, UX, and performance work. Shipped a stable, frequently-released funnel plus internal tooling actively used by producers and admins.",
     metric: {
       label: "Company landing-screen conversion",
       from: "3.28%",
