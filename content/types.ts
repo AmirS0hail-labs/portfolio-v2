@@ -104,6 +104,8 @@ export interface NavItem {
 export interface SiteContent {
   name: string;
   role: string;
+  /** First-viewport dock line (engineer-first, not a designer slogan). */
+  dockLine: string;
   location: string;
   tagline: string;
   email: string;

@@ -2,7 +2,13 @@ export type AnalyticsEventName =
   "cta_contact" | "outbound_email" | "outbound_linkedin" | "outbound_github";
 
 export type AnalyticsPlacement =
-  "hero" | "nav" | "nav_mobile" | "contact" | "contact_icon" | "footer";
+  | "hero"
+  | "hero_dock"
+  | "nav"
+  | "nav_mobile"
+  | "contact"
+  | "contact_icon"
+  | "footer";
 
 declare global {
   interface Window {

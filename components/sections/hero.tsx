@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { FloatingPill } from "@/components/floating-pill";
 import { HeroGrid } from "@/components/hero-grid";
 import { StatusDot } from "@/components/status-dot";
+import { ViewportDock } from "@/components/viewport-dock";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -97,12 +98,12 @@ export function Hero() {
     <section
       id="home"
       aria-label="Introduction"
-      className="relative flex min-h-svh items-center justify-center overflow-x-clip px-3 pt-24 pb-16 sm:overflow-visible sm:px-4 lg:px-5"
+      className="relative flex min-h-svh flex-col overflow-x-clip px-3 pt-24 sm:overflow-visible sm:px-4 lg:px-5"
     >
       <HeroGrid />
 
-      <div className="pointer-events-none relative z-10 flex w-full max-w-[90rem] flex-col items-center text-center">
-        <h1 className="font-display text-[clamp(2.7rem,11vw,9.25rem)] leading-[0.9] font-semibold tracking-[-0.04em] sm:leading-[0.88]">
+      <div className="pointer-events-none relative z-10 flex w-full max-w-[90rem] flex-1 flex-col items-center justify-center self-center text-center">
+        <h1 className="font-display text-[clamp(2.5rem,10.5vw,8.5rem)] leading-[0.9] font-semibold tracking-[-0.04em] sm:leading-[0.88]">
           <span className="block">
             <MotionSpan
               {...lineProps(0)}
@@ -201,7 +202,7 @@ export function Hero() {
                 animate: { opacity: 1, y: 0 },
                 transition: { duration: 0.6, delay: 0.72, ease },
               })}
-          className="mt-8 max-w-xl text-base leading-relaxed text-foreground sm:mt-10 sm:text-lg"
+          className="mt-6 max-w-xl text-base leading-relaxed text-foreground sm:mt-8 sm:text-lg"
         >
           {hero.subheadline}
         </MotionP>
@@ -214,7 +215,7 @@ export function Hero() {
                 animate: { opacity: 1, y: 0 },
                 transition: { duration: 0.6, delay: 0.82, ease },
               })}
-          className="pointer-events-auto mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          className="pointer-events-auto mt-5 flex flex-col items-center justify-center gap-3 sm:mt-6 sm:flex-row"
         >
           <Button asChild size="lg" className="group">
             <Link
@@ -234,6 +235,8 @@ export function Hero() {
           ) : null}
         </MotionDiv>
       </div>
+
+      <ViewportDock />
     </section>
   );
 }

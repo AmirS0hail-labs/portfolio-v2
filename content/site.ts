@@ -11,6 +11,7 @@ export const siteUrl =
 export const site: SiteContent = {
   name: "Amir Sohail",
   role: "Full-Stack Software Engineer",
+  dockLine: "Build, Ship, Measure",
   location: "Islamabad, Pakistan",
   tagline:
     "I take ambiguous problems from requirements to reliable, shipped software.",

@@ -115,6 +115,23 @@
     scroll-padding-top: 5.5rem;
   }
 
+  /* Intro theatre: canvas cover before hydration; overflow lock while playing. */
+  html[data-intro="pending"],
+  html[data-intro="playing"],
+  html[data-intro="exiting"] {
+    overflow: hidden;
+  }
+
+  html[data-intro="pending"]::before,
+  html[data-intro="playing"]::before {
+    content: "";
+    pointer-events: auto;
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background-color: var(--background);
+  }
+
   body {
     background-color: var(--background);
     background-image: radial-gradient(

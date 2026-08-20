@@ -1,78 +1,15 @@
 import { site } from "@/content/site";
-import { GitHubIcon, LinkedInIcon } from "@/components/icons";
-import { TrackedExternalLink } from "@/components/tracked-external-link";
-import type { AnalyticsEventName } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
-
-const socials: {
-  label: string;
-  href: string;
-  Icon: typeof LinkedInIcon | typeof GitHubIcon;
-  event: AnalyticsEventName;
-}[] = [
-  {
-    label: "LinkedIn",
-    href: site.linkedin,
-    Icon: LinkedInIcon,
-    event: "outbound_linkedin",
-  },
-  {
-    label: "GitHub",
-    href: site.github,
-    Icon: GitHubIcon,
-    event: "outbound_github",
-  },
-];
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border/80 bg-background">
-      <div className="flex w-full flex-col gap-8 px-3 pt-8 pb-6 sm:px-4 lg:px-5">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <p className="font-mono text-sm text-accent-sage">
-            <span aria-hidden="true">{"// "}</span>
-            {site.role}
-          </p>
-
-          <ul className="flex items-center gap-2">
-            {socials.map(({ label, href, Icon, event }) => (
-              <li key={label}>
-                <TrackedExternalLink
-                  event={event}
-                  placement="footer"
-                  href={href}
-                  aria-label={label}
-                  title={label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-[var(--duration-hover)] ease-canvas hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
-                  )}
-                >
-                  <Icon className="size-[18px]" />
-                </TrackedExternalLink>
-              </li>
-            ))}
-          </ul>
-
-          <TrackedExternalLink
-            event="outbound_email"
-            placement="footer"
-            href={`mailto:${site.email}`}
-            className="inline-flex items-center rounded-full border border-border bg-transparent px-4 py-2 font-mono text-sm text-foreground transition-[background-color,border-color,color,transform] duration-[var(--duration-hover)] ease-canvas hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px"
-          >
-            {site.email}
-          </TrackedExternalLink>
-        </div>
-
-        <div className="flex items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>
-            © {year} {site.name}
-          </p>
-          <p>{site.location}</p>
-        </div>
+      <div className="flex items-center justify-between gap-4 px-3 pt-8 pb-6 text-xs text-muted-foreground sm:px-4 lg:px-5">
+        <p>
+          © {year} {site.name}
+        </p>
+        <p>{site.location}</p>
       </div>
 
       <div
