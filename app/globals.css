@@ -193,10 +193,14 @@
     scroll-behavior: auto !important;
   }
 
-  .status-dot::after,
-  .title-pulse::after {
+  .status-dot::after {
     content: none;
     animation: none !important;
+  }
+
+  .title-blink {
+    animation: none !important;
+    opacity: 1;
   }
 }
 
@@ -296,28 +300,16 @@
     mask-size: 100% 100%;
   }
 
-  /* Trailing 8px square — period, not a mid-line bullet.
-   * Kill the heading's line-height strut so the box is 8px tall and
-   * `vertical-align: baseline` can actually sit on the type. */
-  .title-pulse {
-    position: relative;
+  /* Trailing 8px square — caret blink (on/off), not a pulse. */
+  .title-blink {
     display: inline-block;
     width: 8px;
     height: 8px;
     margin-left: 0.28em;
     vertical-align: baseline;
     line-height: 0;
-    overflow: visible;
     background-color: var(--accent-sage);
-  }
-
-  .title-pulse::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: var(--accent-sage);
-    opacity: 0.55;
-    animation: title-pulse 2s ease-out infinite;
+    animation: title-blink 1.1s step-end infinite;
   }
 
   .hero-grid-cell {
@@ -476,17 +468,13 @@
   }
 }
 
-@keyframes title-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.55;
+@keyframes title-blink {
+  0%,
+  49% {
+    opacity: 1;
   }
-  70% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
+  50%,
   100% {
-    transform: scale(2.4);
     opacity: 0;
   }
 }

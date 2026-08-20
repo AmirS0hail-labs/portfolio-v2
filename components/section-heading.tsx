@@ -10,8 +10,8 @@ type SectionHeadingProps = {
   description?: React.ReactNode;
   align?: "left" | "center";
   className?: string;
-  /** Trailing sage pulse-square. Off for Contact. */
-  pulse?: boolean;
+  /** Trailing sage blink-square. Off for Contact. */
+  blink?: boolean;
   /** Chrome icon centered on the hairline under the heading. */
   icon?: LucideIcon;
 };
@@ -23,7 +23,7 @@ export function SectionHeading({
   description,
   align = "left",
   className,
-  pulse = true,
+  blink = true,
   icon: Icon,
 }: SectionHeadingProps) {
   return (
@@ -45,7 +45,7 @@ export function SectionHeading({
       ) : null}
       <h2 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
         {title}
-        {pulse ? <span className="title-pulse" aria-hidden="true" /> : null}
+        {blink ? <span className="title-blink" aria-hidden="true" /> : null}
       </h2>
       {description ? (
         <p
