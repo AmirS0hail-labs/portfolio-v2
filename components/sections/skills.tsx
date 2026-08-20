@@ -1,3 +1,5 @@
+import { Code2 } from "lucide-react";
+
 import { skillGroups } from "@/content/skills";
 import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
@@ -14,6 +16,7 @@ export function Skills() {
           eyebrow="Skills"
           title="The tools I reach for"
           description="Grouped by where they sit in the stack. Backend-leaning, but comfortable end to end."
+          icon={Code2}
         />
       </Reveal>
 

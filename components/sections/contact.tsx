@@ -56,6 +56,7 @@ export function Contact() {
                   <span className="text-accent-rose">reliable</span>.
                 </>
               }
+              pulse={false}
               description="Have an ambiguous problem that needs to become shipped software? I'm happy to talk through it. The fastest way to reach me is email."
             />
 

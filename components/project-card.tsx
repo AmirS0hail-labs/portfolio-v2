@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 
 import type { Project } from "@/content/types";
@@ -10,28 +7,26 @@ import { TechBadge } from "@/components/tech-badge";
 import { cn } from "@/lib/utils";
 
 export function ProjectCard({ project }: { project: Project }) {
-  const shouldReduceMotion = useReducedMotion();
   const isLink = Boolean(project.href);
 
   const inner = (
     <>
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-display text-lg font-semibold tracking-tight">
-          {project.name}
-        </h3>
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-center gap-2">
+          <h3 className="work-row-title font-display text-lg font-semibold tracking-tight">
+            {project.name}
+          </h3>
           {project.current ? <Badge variant="sage">Current</Badge> : null}
           {isLink ? (
-            <ArrowUpRight className="size-4 text-accent-sage transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+            <ArrowUpRight className="size-4 text-accent-sage transition-[color,transform] duration-[var(--duration-hover)] ease-canvas group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
           ) : null}
         </div>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {project.description}
+        </p>
       </div>
 
-      <p className="text-sm leading-relaxed text-foreground">
-        {project.description}
-      </p>
-
-      <ul className="mt-auto flex flex-wrap gap-2 pt-2">
+      <ul className="flex flex-wrap gap-2 sm:max-w-[42%] sm:justify-end">
         {project.stack.map((tech) => (
           <li key={tech}>
             <TechBadge>{tech}</TechBadge>
@@ -42,27 +37,22 @@ export function ProjectCard({ project }: { project: Project }) {
   );
 
   const className = cn(
-    "surface-panel group flex h-full flex-col gap-3 rounded-2xl p-5",
+    "work-row group flex flex-col gap-3 py-6 motion-safe:hover:gap-2 motion-safe:hover:py-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8 motion-safe:sm:hover:gap-6",
+    isLink ? "relative" : "cursor-default",
   );
 
-  return (
-    <motion.div
-      whileHover={shouldReduceMotion ? undefined : { y: -2 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="h-full"
-    >
-      {isLink ? (
-        <Link
-          href={project.href!}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={className}
-        >
-          {inner}
-        </Link>
-      ) : (
-        <div className={className}>{inner}</div>
-      )}
-    </motion.div>
-  );
+  if (isLink) {
+    return (
+      <Link
+        href={project.href!}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {inner}
+      </Link>
+    );
+  }
+
+  return <article className={className}>{inner}</article>;
 }

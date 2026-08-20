@@ -1,4 +1,4 @@
-import { GraduationCap, MapPin } from "lucide-react";
+import { GraduationCap, MapPin, User } from "lucide-react";
 
 import { about } from "@/content/about";
 import { site } from "@/content/site";
@@ -10,7 +10,12 @@ export function About() {
   return (
     <Section id="about">
       <Reveal>
-        <SectionHeading eyebrow="About" index="03" title="A little about me" />
+        <SectionHeading
+          eyebrow="About"
+          index="03"
+          title="A little about me"
+          icon={User}
+        />
       </Reveal>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20.5rem] lg:items-start">

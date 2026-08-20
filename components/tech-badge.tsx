@@ -12,7 +12,7 @@ export function TechBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md border border-accent-sage/80 bg-accent-sage/15 px-2.5 py-1 font-mono text-xs text-accent-sage transition-[border-color,color,background-color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-sage hover:bg-accent-sage/25 hover:text-foreground",
+        "inline-flex items-center rounded-md border border-accent-sage/80 bg-accent-sage/15 px-2.5 py-1 font-mono text-xs text-accent-sage transition-[border-color,color,background-color] duration-[var(--duration-hover)] ease-canvas hover:border-accent-sage hover:bg-accent-sage/25 hover:text-foreground",
         className,
       )}
     >

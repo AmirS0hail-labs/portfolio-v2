@@ -1,3 +1,5 @@
+import { Layers } from "lucide-react";
+
 import { projects } from "@/content/projects";
 import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
@@ -13,12 +15,13 @@ export function Projects() {
           eyebrow="Projects"
           title="Other things I've built"
           description="Smaller products and internal tools across Rails, Next.js, and CI automation."
+          icon={Layers}
         />
       </Reveal>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2">
+      <div className="work-list mt-12">
         {projects.map((project, index) => (
-          <Reveal key={project.name} delay={index * 0.06} className="h-full">
+          <Reveal key={project.name} delay={index * 0.06}>
             <ProjectCard project={project} />
           </Reveal>
         ))}

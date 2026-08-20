@@ -8,6 +8,7 @@ import { hero } from "@/content/hero";
 import type { AccentColor } from "@/content/types";
 import { Button } from "@/components/ui/button";
 import { FloatingPill } from "@/components/floating-pill";
+import { HeroGrid } from "@/components/hero-grid";
 import { StatusDot } from "@/components/status-dot";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -98,11 +99,9 @@ export function Hero() {
       aria-label="Introduction"
       className="relative flex min-h-svh items-center justify-center overflow-x-clip px-3 pt-24 pb-16 sm:overflow-visible sm:px-4 lg:px-5"
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_78%)] opacity-40" />
-      </div>
+      <HeroGrid />
 
-      <div className="relative z-10 flex w-full max-w-[90rem] flex-col items-center text-center">
+      <div className="pointer-events-none relative z-10 flex w-full max-w-[90rem] flex-col items-center text-center">
         <h1 className="font-display text-[clamp(2.7rem,11vw,9.25rem)] leading-[0.9] font-semibold tracking-[-0.04em] sm:leading-[0.88]">
           <span className="block">
             <MotionSpan
@@ -215,7 +214,7 @@ export function Hero() {
                 animate: { opacity: 1, y: 0 },
                 transition: { duration: 0.6, delay: 0.82, ease },
               })}
-          className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          className="pointer-events-auto mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
           <Button asChild size="lg" className="group">
             <Link

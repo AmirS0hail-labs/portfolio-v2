@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -9,6 +10,10 @@ type SectionHeadingProps = {
   description?: React.ReactNode;
   align?: "left" | "center";
   className?: string;
+  /** Trailing sage pulse-square. Off for Contact. */
+  pulse?: boolean;
+  /** Chrome icon centered on the hairline under the heading. */
+  icon?: LucideIcon;
 };
 
 export function SectionHeading({
@@ -18,6 +23,8 @@ export function SectionHeading({
   description,
   align = "left",
   className,
+  pulse = true,
+  icon: Icon,
 }: SectionHeadingProps) {
   return (
     <div
@@ -38,6 +45,7 @@ export function SectionHeading({
       ) : null}
       <h2 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
         {title}
+        {pulse ? <span className="title-pulse" aria-hidden="true" /> : null}
       </h2>
       {description ? (
         <p
@@ -48,6 +56,16 @@ export function SectionHeading({
         >
           {description}
         </p>
+      ) : null}
+      {Icon ? (
+        <div className="flex w-full items-center gap-3 pt-1" aria-hidden="true">
+          <span className="section-rule flex-1" />
+          <Icon
+            className="size-3.5 shrink-0 text-accent-sage"
+            strokeWidth={1.75}
+          />
+          <span className="section-rule flex-1" />
+        </div>
       ) : null}
     </div>
   );
