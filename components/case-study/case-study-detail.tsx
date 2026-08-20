@@ -22,7 +22,7 @@ function DetailHeading({
       <span className="font-mono text-xs font-medium tracking-wider text-accent-sage">
         {index}
       </span>
-      <span className="h-px w-6 bg-accent-sage" aria-hidden="true" />
+      <span className="section-rule w-6 shrink-0" aria-hidden="true" />
       {children}
     </h2>
   );
@@ -41,13 +41,13 @@ export function CaseStudyDetail({
     <article className="mx-auto w-full max-w-6xl px-3 pt-28 pb-24 sm:px-4 sm:pt-32 lg:px-5">
       <Link
         href="/#case-studies"
-        className="inline-flex items-center gap-1.5 text-sm text-accent-sage transition-[color,transform] duration-300 hover:text-foreground motion-safe:hover:-translate-x-0.5"
+        className="inline-flex items-center gap-1.5 text-sm text-accent-sage transition-[color,transform] duration-[var(--duration-hover)] ease-canvas hover:text-foreground motion-safe:hover:-translate-x-0.5"
       >
         <ArrowLeft className="size-4" />
         All case studies
       </Link>
 
-      <header className="mt-8 flex flex-col gap-5 border-b border-border pb-10">
+      <header className="hairline mt-8 flex flex-col gap-5 border-b pb-10">
         <div className="flex flex-wrap items-center gap-3">
           <Badge variant="sage">{caseStudy.org}</Badge>
           <span className="text-sm text-muted-foreground">
@@ -55,7 +55,7 @@ export function CaseStudyDetail({
           </span>
         </div>
 
-        <h1 className="font-display max-w-4xl text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl">
+        <h1 className="max-w-4xl font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl">
           {caseStudy.title}
         </h1>
 
@@ -122,7 +122,7 @@ export function CaseStudyDetail({
                 <MediaPlaceholder
                   key={visual.caption}
                   visual={visual}
-                  className="h-full w-full aspect-[16/10]"
+                  className="aspect-[16/10] h-full w-full"
                 />
               ))}
             </div>
@@ -143,7 +143,7 @@ export function CaseStudyDetail({
         </Reveal>
 
         {caseStudy.privacyNote ? (
-          <div className="flex max-w-3xl items-start gap-3 rounded-xl border border-border bg-background/40 p-5">
+          <div className="hairline-box flex max-w-3xl items-start gap-3 rounded-xl bg-background/40 p-5">
             <ShieldAlert className="mt-0.5 size-5 shrink-0 text-accent-sage" />
             <p className="text-sm leading-relaxed text-muted-foreground">
               {caseStudy.privacyNote}
@@ -152,43 +152,38 @@ export function CaseStudyDetail({
         ) : null}
       </div>
 
-      <nav
-        aria-label="More case studies"
-        className="mt-16 flex items-center justify-between gap-6 border-t border-border pt-8"
-      >
-        {prev ? (
-          <Link
-            href={`/case-studies/${prev.slug}`}
-            className="group flex max-w-[48%] flex-col gap-1 text-left transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-x-0.5"
-          >
-            <span className="inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-accent-sage uppercase transition-colors group-hover:text-foreground">
-              <ArrowLeft className="size-3 transition-transform duration-300 group-hover:-translate-x-0.5" />
-              Previous
-            </span>
-            <span className="truncate text-sm font-medium text-foreground">
-              {prev.title}
-            </span>
-          </Link>
-        ) : (
-          <span />
-        )}
-        {next ? (
-          <Link
-            href={`/case-studies/${next.slug}`}
-            className="group flex max-w-[48%] flex-col gap-1 text-right transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:translate-x-0.5"
-          >
-            <span className="inline-flex items-center justify-end gap-1.5 font-mono text-xs tracking-wider text-accent-sage uppercase transition-colors group-hover:text-foreground">
-              Next
-              <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
-            </span>
-            <span className="truncate text-sm font-medium text-foreground">
-              {next.title}
-            </span>
-          </Link>
-        ) : (
-          <span />
-        )}
-      </nav>
+      {prev || next ? (
+        <nav aria-label="More case studies" className="work-list mt-16">
+          {prev ? (
+            <Link
+              href={`/case-studies/${prev.slug}`}
+              className="work-row group flex flex-col gap-1 py-6 motion-safe:hover:gap-0.5 motion-safe:hover:py-4"
+            >
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs tracking-wider text-accent-sage uppercase">
+                <ArrowLeft className="size-3" />
+                Previous
+              </span>
+              <span className="work-row-title font-display text-sm font-medium">
+                {prev.title}
+              </span>
+            </Link>
+          ) : null}
+          {next ? (
+            <Link
+              href={`/case-studies/${next.slug}`}
+              className="work-row group flex flex-col gap-1 py-6 text-right motion-safe:hover:gap-0.5 motion-safe:hover:py-4"
+            >
+              <span className="inline-flex items-center justify-end gap-1.5 font-mono text-xs tracking-wider text-accent-sage uppercase">
+                Next
+                <ArrowRight className="size-3" />
+              </span>
+              <span className="work-row-title font-display text-sm font-medium">
+                {next.title}
+              </span>
+            </Link>
+          ) : null}
+        </nav>
+      ) : null}
     </article>
   );
 }

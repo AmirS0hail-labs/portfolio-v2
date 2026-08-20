@@ -54,6 +54,8 @@
   --duration-ripple: 2400ms;
   --ease-ripple: cubic-bezier(0.25, 0.08, 0.22, 1);
   --grid-size: 72px;
+
+  --hairline: color-mix(in oklab, var(--accent-sage) 22%, transparent);
 }
 
 @theme inline {
@@ -196,36 +198,35 @@
     content: none;
     animation: none !important;
   }
-
-  .tech-marquee-track {
-    animation: none !important;
-  }
 }
 
 @layer utilities {
   .bg-grid {
     background-image:
-      linear-gradient(
-        color-mix(in oklab, var(--accent-sage) 22%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        color-mix(in oklab, var(--accent-sage) 22%, transparent) 1px,
-        transparent 1px
-      );
+      linear-gradient(var(--hairline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
     background-size: var(--grid-size) var(--grid-size);
+  }
+
+  /* Sage hairline — shared by work rows, spec sheet, and detail chrome. */
+  .hairline,
+  .hairline-box,
+  .work-list,
+  .work-row,
+  .spec-list,
+  .spec-row {
+    border-color: var(--hairline);
   }
 
   /* Hairline work rows — hover tightens padding/gap, not a card lift. */
   .work-list {
-    border-bottom: 1px solid
-      color-mix(in oklab, var(--accent-sage) 22%, transparent);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
   }
 
   .work-row {
-    border-top: 1px solid
-      color-mix(in oklab, var(--accent-sage) 22%, transparent);
+    border-top-width: 1px;
+    border-top-style: solid;
     transition:
       padding-block var(--duration-hover) var(--ease-canvas),
       gap var(--duration-hover) var(--ease-canvas),
@@ -250,7 +251,22 @@
   .section-rule {
     height: 1px;
     background-color: color-mix(in oklab, var(--accent-sage) 25%, transparent);
-    transition: background-color var(--duration-hover) var(--ease-canvas);
+  }
+
+  /* Skills spec sheet — static rules, never a clickable work row. */
+  .spec-list {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  .spec-row {
+    border-top-width: 1px;
+    border-top-style: solid;
+  }
+
+  .hairline-box {
+    border-width: 1px;
+    border-style: solid;
   }
 
   /* Binil-style: grid strongest behind the type, long shadow falloff to
@@ -344,6 +360,9 @@
     );
     border-style: solid;
     border-width: 1px;
+    transition-property: border-color;
+    transition-duration: var(--duration-hover);
+    transition-timing-function: var(--ease-canvas);
     border-top-color: color-mix(in oklab, var(--foreground) 26%, transparent);
     border-left-color: color-mix(in oklab, var(--foreground) 18%, transparent);
     border-right-color: color-mix(
@@ -440,25 +459,6 @@
   .group:focus-visible .status-dot::after {
     animation-duration: 1.1s;
   }
-
-  .tech-marquee {
-    overflow: hidden;
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      black 8%,
-      black 92%,
-      transparent
-    );
-  }
-
-  .tech-marquee-track {
-    animation: tech-marquee 42s linear infinite;
-  }
-
-  .tech-marquee:hover .tech-marquee-track {
-    animation-play-state: paused;
-  }
 }
 
 @keyframes status-pulse {
@@ -502,14 +502,5 @@
   100% {
     transform: scale(1);
     opacity: 0;
-  }
-}
-
-@keyframes tech-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
   }
 }

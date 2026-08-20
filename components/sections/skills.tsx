@@ -4,7 +4,6 @@ import { skillGroups } from "@/content/skills";
 import { Section } from "@/components/section";
 import { SectionHeading } from "@/components/section-heading";
 import { TechBadge } from "@/components/tech-badge";
-import { TechMarquee } from "@/components/tech-marquee";
 import { Reveal } from "@/components/reveal";
 
 export function Skills() {
@@ -20,33 +19,32 @@ export function Skills() {
         />
       </Reveal>
 
-      <div className="mt-10">
-        <TechMarquee />
-      </div>
-
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {skillGroups.map((group, index) => (
-          <Reveal key={group.category} delay={index * 0.05} className="h-full">
-            <div className="surface-panel flex h-full flex-col gap-3 rounded-2xl p-5">
-              <h3 className="text-sm font-semibold tracking-wider text-accent-sage uppercase">
+      <Reveal delay={0.08}>
+        <dl className="spec-list mt-10">
+          {skillGroups.map((group) => (
+            <div
+              key={group.category}
+              className="spec-row grid gap-3 py-5 sm:grid-cols-[10.5rem_minmax(0,1fr)] sm:items-start sm:gap-8"
+            >
+              <dt className="font-mono text-xs font-semibold tracking-wider text-accent-sage uppercase">
                 {group.category}
-              </h3>
-              <ul className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <li key={skill}>
-                    <TechBadge>{skill}</TechBadge>
-                  </li>
-                ))}
-              </ul>
-              {group.note ? (
-                <p className="mt-auto text-xs text-muted-foreground">
-                  {group.note}
-                </p>
-              ) : null}
+              </dt>
+              <dd className="flex flex-col gap-2">
+                <ul className="flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <li key={skill}>
+                      <TechBadge>{skill}</TechBadge>
+                    </li>
+                  ))}
+                </ul>
+                {group.note ? (
+                  <p className="text-xs text-muted-foreground">{group.note}</p>
+                ) : null}
+              </dd>
             </div>
-          </Reveal>
-        ))}
-      </div>
+          ))}
+        </dl>
+      </Reveal>
     </Section>
   );
 }

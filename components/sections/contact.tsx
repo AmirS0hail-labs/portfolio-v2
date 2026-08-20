@@ -98,7 +98,7 @@ export function Contact() {
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
                     className={cn(
-                      "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
+                      "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-[var(--duration-hover)] ease-canvas hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
                     )}
                   >
                     <Icon className="size-[18px]" />

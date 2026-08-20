@@ -48,7 +48,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
+                    "flex size-10 items-center justify-center rounded-full border border-border text-accent-sage transition-[background-color,border-color,color,transform] duration-[var(--duration-hover)] ease-canvas hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px",
                   )}
                 >
                   <Icon className="size-[18px]" />
@@ -61,7 +61,7 @@ export function SiteFooter() {
             event="outbound_email"
             placement="footer"
             href={`mailto:${site.email}`}
-            className="inline-flex items-center rounded-full border border-border bg-transparent px-4 py-2 font-mono text-sm text-foreground transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px"
+            className="inline-flex items-center rounded-full border border-border bg-transparent px-4 py-2 font-mono text-sm text-foreground transition-[background-color,border-color,color,transform] duration-[var(--duration-hover)] ease-canvas hover:border-accent-mahogany hover:bg-accent-mahogany/55 hover:text-foreground motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-px"
           >
             {site.email}
           </TrackedExternalLink>

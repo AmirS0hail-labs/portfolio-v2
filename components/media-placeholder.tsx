@@ -120,7 +120,7 @@ export function MediaPlaceholder({
   return (
     <figure
       className={cn(
-        "surface-panel relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-0.5",
+        "surface-panel relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl",
         aspect,
         className,
       )}
