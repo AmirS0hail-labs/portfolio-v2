@@ -1,5 +1,9 @@
+"use client";
+
 import * as React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import * as Dialog from "@radix-ui/react-dialog";
 import {
   Clock,
   Globe,
@@ -8,6 +12,9 @@ import {
   MonitorPlay,
   PlayCircle,
   ShieldAlert,
+  X,
+  ExternalLink,
+  ZoomIn,
 } from "lucide-react";
 
 import type { Sensitivity, Visual } from "@/content/types";
@@ -74,10 +81,10 @@ export function MediaPlaceholder({
 
   // When a real (already-safe) asset is provided, render it instead of the placeholder.
   if (visual.src) {
-    return (
+    const trigger = (
       <figure
         className={cn(
-          "surface-panel group relative overflow-hidden rounded-xl",
+          "surface-panel group relative overflow-hidden rounded-xl cursor-pointer ring-1 ring-border/50 hover:ring-border transition-all",
           aspect,
           className,
         )}
@@ -92,28 +99,77 @@ export function MediaPlaceholder({
             aria-label={visual.caption}
           />
         ) : (
-          <Image
-            src={visual.src}
-            alt={visual.caption}
-            fill
-            priority={priority}
-            sizes="(min-width: 768px) 45vw, 100vw"
-            className="object-cover"
-          />
+          <>
+            <Image
+              src={visual.src}
+              alt={visual.caption}
+              fill
+              priority={priority}
+              quality={90}
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-contain"
+            />
+            <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10 flex items-center justify-center">
+              <ZoomIn className="size-8 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 drop-shadow-md" />
+            </div>
+          </>
         )}
-        <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-black/80 to-transparent px-4 py-3 text-sm text-foreground/90">
-          <span>{visual.caption}</span>
-          <span
-            className={cn(
-              "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium",
-              sensitivity.chip,
-            )}
-          >
-            <SensitivityIcon className="size-3" />
-            {sensitivity.label}
-          </span>
-        </figcaption>
       </figure>
+    );
+
+    if (visual.kind === "video") {
+      return trigger; // video controls are native
+    }
+
+    return (
+      <Dialog.Root>
+        <Dialog.Trigger asChild>
+          {trigger}
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+          <Dialog.Content className="fixed inset-4 z-50 flex items-center justify-center data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:inset-10">
+            <div className="relative flex h-full w-full flex-col overflow-hidden">
+              <div className="flex-1 relative min-h-0">
+                <Image
+                  src={visual.src}
+                  alt={visual.caption}
+                  fill
+                  quality={90}
+                  className="object-contain"
+                  sizes="100vw"
+                />
+              </div>
+              <div className="mt-4 flex items-center justify-between gap-4">
+                <div className="flex flex-col gap-1 text-white">
+                  <span className="font-medium">{visual.caption}</span>
+                  {visual.note && <span className="text-sm text-white/70">{visual.note}</span>}
+                </div>
+                <div className="flex items-center gap-2">
+                  {visual.href && (
+                    <Link
+                      href={visual.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-black hover:bg-white/90"
+                    >
+                      Visit site <ExternalLink className="size-4" />
+                    </Link>
+                  )}
+                  <Dialog.Close asChild>
+                    <button
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-white/10 text-white hover:bg-white/20 transition-colors"
+                      aria-label="Close"
+                    >
+                      <X className="size-4" />
+                    </button>
+                  </Dialog.Close>
+                </div>
+              </div>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     );
   }
 

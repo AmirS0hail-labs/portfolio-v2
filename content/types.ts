@@ -33,6 +33,8 @@ export interface Visual {
   kind: "image" | "video" | "embed";
   /** Optional real asset path; when absent a placeholder is rendered. */
   src?: string;
+  /** Optional external link, eg for a live site */
+  href?: string;
   caption: string;
   sensitivity: Sensitivity;
   /** Short note shown on the placeholder explaining the asset status. */
@@ -62,6 +64,8 @@ export interface CaseStudy {
   stack: string[];
   visuals: Visual[];
   accent: AccentColor;
+  /** Optional live product URL, shown on the detail page. */
+  href?: string;
   /** Optional privacy disclaimer surfaced on the detail page. */
   privacyNote?: string;
 }
@@ -71,6 +75,8 @@ export interface Project {
   description: string;
   stack: string[];
   href?: string;
+  /** Public marketing still, if one exists. */
+  image?: string;
   current?: boolean;
 }
 

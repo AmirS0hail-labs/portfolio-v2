@@ -6,12 +6,14 @@ export const projects: Project[] = [
     description:
       "A Rails hiring platform with job posting and applicant review, plus a JWT-based handoff to a separate technical-assessment service.",
     stack: ["Ruby on Rails", "PostgreSQL", "JWT"],
+    href: "https://letsremotify.com/",
   },
   {
     name: "TestRabbit",
     description:
       "An assessment authoring tool with automated end-to-end checks wired through Cypress and GitHub Actions CI.",
     stack: ["Cypress", "GitHub Actions", "JavaScript"],
+    href: "https://testrabbit.co/",
   },
   {
     name: "Review Application",

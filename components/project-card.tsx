@@ -10,7 +10,7 @@ export function ProjectCard({ project }: { project: Project }) {
   const isLink = Boolean(project.href);
 
   const inner = (
-    <>
+    <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-center gap-2">
           <h3 className="work-row-title font-display text-lg font-semibold tracking-tight">
@@ -33,11 +33,11 @@ export function ProjectCard({ project }: { project: Project }) {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 
   const className = cn(
-    "work-row group flex flex-col gap-3 py-6 motion-safe:hover:gap-2 motion-safe:hover:py-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8 motion-safe:sm:hover:gap-6",
+    "work-row group flex flex-col gap-3 py-6 motion-safe:hover:gap-2 motion-safe:hover:py-4",
     isLink ? "relative" : "cursor-default",
   );
 

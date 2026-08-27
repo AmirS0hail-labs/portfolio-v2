@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, ShieldAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, ShieldAlert } from "lucide-react";
 
 import type { CaseStudy } from "@/content/types";
 import { Badge } from "@/components/ui/badge";
@@ -58,6 +58,18 @@ export function CaseStudyDetail({
         <h1 className="max-w-4xl font-display text-3xl leading-tight font-semibold tracking-tight sm:text-4xl md:text-5xl">
           {caseStudy.title}
         </h1>
+
+        {caseStudy.href ? (
+          <Link
+            href={caseStudy.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-fit items-center gap-1.5 text-sm text-accent-sage transition-[color,transform] duration-[var(--duration-hover)] ease-canvas hover:text-foreground"
+          >
+            View live site
+            <ArrowUpRight className="size-4" />
+          </Link>
+        ) : null}
 
         <p className="max-w-3xl text-lg leading-relaxed text-foreground">
           {caseStudy.summary}
@@ -118,10 +130,11 @@ export function CaseStudyDetail({
                   "sm:grid-cols-2 lg:grid-cols-3",
               )}
             >
-              {caseStudy.visuals.map((visual) => (
+              {caseStudy.visuals.map((visual, index) => (
                 <MediaPlaceholder
                   key={visual.caption}
                   visual={visual}
+                  priority={index === 0}
                   className="aspect-[16/10] h-full w-full"
                 />
               ))}
