@@ -9,9 +9,11 @@ import {
 import { createPortal } from "react-dom";
 
 import {
+  greetingAt,
   greetings,
   INTRO_CYCLE_MS,
   INTRO_FADE_MS,
+  INTRO_FAIL_OPEN_MS,
   INTRO_STORAGE_KEY,
 } from "@/content/intro";
 import { cn } from "@/lib/utils";
@@ -30,6 +32,18 @@ function getIntroPendingServer() {
   return false;
 }
 
+function clearIntroAttribute() {
+  document.documentElement.removeAttribute("data-intro");
+}
+
+function markIntroSeen() {
+  try {
+    sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
+  } catch {
+    // Private mode / blocked storage — skip is best-effort.
+  }
+}
+
 export function IntroOverlay() {
   const pending = useSyncExternalStore(
     subscribeIntro,
@@ -41,9 +55,16 @@ export function IntroOverlay() {
   const [index, setIndex] = useState(0);
   const [percent, setPercent] = useState(0);
 
-  if (pending && state === "idle" && !hasPlayed) {
+  const canPlay = greetings.length > 0;
+  const greeting = greetingAt(index);
+
+  if (pending && state === "idle" && !hasPlayed && canPlay) {
     setHasPlayed(true);
     setState("playing");
+  }
+
+  if (state !== "idle" && !greeting) {
+    setState("idle");
   }
 
   useLayoutEffect(() => {
@@ -61,22 +82,42 @@ export function IntroOverlay() {
     html.removeAttribute("data-intro");
   }, [state]);
 
+  // Hydration stalled with the black cover still up — show the page.
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      if (document.documentElement.dataset.intro !== "pending") return;
+      clearIntroAttribute();
+      setHasPlayed(true);
+      setState("idle");
+    }, INTRO_FAIL_OPEN_MS);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
   useEffect(() => {
     if (state !== "playing") return;
+    if (!canPlay) {
+      clearIntroAttribute();
+      setState("idle");
+      return;
+    }
 
+    const last = greetings.length - 1;
     const start = performance.now();
     const greetingMs = INTRO_CYCLE_MS / greetings.length;
     let raf = 0;
 
     const tick = (now: number) => {
-      const elapsed = now - start;
+      const elapsed = Math.max(0, now - start);
       const t = Math.min(elapsed / INTRO_CYCLE_MS, 1);
-      setPercent(Math.round(t * 100));
-      setIndex(
-        Math.min(Math.floor(elapsed / greetingMs), greetings.length - 1),
+      const nextIndex = Math.max(
+        0,
+        Math.min(Math.floor(elapsed / greetingMs), last),
       );
+      setPercent(Math.round(t * 100));
+      setIndex(nextIndex);
       if (elapsed >= INTRO_CYCLE_MS) {
         setPercent(100);
+        setIndex(last);
         setState("exiting");
         return;
       }
@@ -85,26 +126,22 @@ export function IntroOverlay() {
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [state]);
+  }, [state, canPlay]);
 
   useEffect(() => {
     if (state !== "exiting") return;
 
     const timeout = window.setTimeout(() => {
-      try {
-        sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
-      } catch {
-        // Private mode / blocked storage — skip is best-effort.
-      }
+      markIntroSeen();
       setState("idle");
     }, INTRO_FADE_MS);
 
     return () => window.clearTimeout(timeout);
   }, [state]);
 
-  if (state === "idle") return null;
-
-  const greeting = greetings[index];
+  if (state === "idle" || !greeting) {
+    return null;
+  }
 
   return createPortal(
     <div
