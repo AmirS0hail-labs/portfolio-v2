@@ -7,6 +7,8 @@ export const testimonials: Testimonial[] = [
     name: "Ali Farooq",
     title: "Alfabolt",
     relationship: "Managed Amir at Alfabolt",
+    image: "/testimonials/ali-farooq.jpg",
+    linkedin: "https://www.linkedin.com/in/ali-farooq-a72b46116",
   },
   {
     quote:
@@ -14,5 +16,7 @@ export const testimonials: Testimonial[] = [
     name: "Adam Smith",
     title: "VP of Product & Technology, Trucker Path Insurance",
     relationship: "Managed Amir for ~1.5 years",
+    image: "/testimonials/adam-smith.jpg",
+    linkedin: "https://www.linkedin.com/in/adam-smith-insurance",
   },
 ];

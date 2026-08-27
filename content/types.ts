@@ -85,6 +85,8 @@ export interface Testimonial {
   name: string;
   title: string;
   relationship: string;
+  image?: string;
+  linkedin?: string;
 }
 
 export interface SkillGroup {

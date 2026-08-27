@@ -8,7 +8,8 @@ export type AnalyticsPlacement =
   | "nav_mobile"
   | "contact"
   | "contact_icon"
-  | "footer";
+  | "footer"
+  | "testimonials";
 
 declare global {
   interface Window {
