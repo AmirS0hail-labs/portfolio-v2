@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { caseStudies } from "@/content/case-studies";
+import { quietPages } from "@/content/quiet-pages";
 import { siteUrl } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -18,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    ...quietPages.map((page) => ({
+      url: `${siteUrl}/${page.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
     })),
   ];
 }
